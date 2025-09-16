@@ -60,23 +60,25 @@ export function Articles() {
               key={index}
               className="project-card group hover:shadow-lg transition-all duration-300 overflow-hidden"
             >
-              <CardContent className="p-6">
-                <div className="flex gap-6">
-                  <div className="flex-1">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  <div className="flex-1 order-2 sm:order-1">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="inline-block px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-100 rounded-full text-sm">
                         {article.category}
                       </span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3 text-balance group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-3 text-balance group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                       {article.title}
                     </h3>
 
-                    <p className="text-muted-foreground mb-4 text-pretty leading-relaxed">{article.description}</p>
+                    <p className="text-muted-foreground mb-4 text-pretty leading-relaxed text-sm sm:text-base">
+                      {article.description}
+                    </p>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                         <span>{article.date}</span>
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
@@ -97,7 +99,7 @@ export function Articles() {
                       <Button
                         asChild
                         size="sm"
-                        className="backdrop-blur-md bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-700 dark:text-purple-100 rounded-full"
+                        className="backdrop-blur-md bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-700 dark:text-purple-100 rounded-full w-fit"
                       >
                         <a href={article.url} target="_blank" rel="noopener noreferrer">
                           Read Article
@@ -107,8 +109,8 @@ export function Articles() {
                     </div>
                   </div>
 
-                  <div className="flex-shrink-0">
-                    <div className="w-32 h-24 sm:w-40 sm:h-28 rounded-lg overflow-hidden bg-muted">
+                  <div className="flex-shrink-0 order-1 sm:order-2">
+                    <div className="w-full h-48 sm:w-32 sm:h-24 lg:w-40 lg:h-28 rounded-lg overflow-hidden bg-muted">
                       <img
                         src={article.thumbnail || "/placeholder.svg"}
                         alt={`Thumbnail for ${article.title}`}
