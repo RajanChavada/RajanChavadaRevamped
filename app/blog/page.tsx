@@ -1,7 +1,7 @@
 import { promises as fs } from "fs"
 import path from "path"
 import Link from "next/link"
-import { parseISO, format } from "date-fns"
+import { format } from "date-fns"
 import matter from "gray-matter"
 import type { Metadata } from "next"
 import { Navigation } from "@/components/navigation"
@@ -19,7 +19,7 @@ interface BlogPost {
   slug: string
   title: string
   description: string
-  date: string
+  date: Date
   author: string
   image?: string
   category?: string
@@ -44,11 +44,21 @@ async function getBlogPosts(): Promise<BlogPost[]> {
       const wordCount = content.split(/\s+/).length
       const readTime = `${Math.ceil(wordCount / 200)} min read`
 
+      // Handle date - gray-matter may return Date object or string
+      let postDate: Date
+      if (data.date instanceof Date) {
+        postDate = data.date
+      } else if (typeof data.date === "string") {
+        postDate = new Date(data.date)
+      } else {
+        postDate = new Date()
+      }
+
       posts.push({
         slug: file.replace(".mdx", ""),
         title: data.title || "Untitled",
         description: data.description || "",
-        date: data.date || new Date().toISOString(),
+        date: postDate,
         author: data.author || "Rajan Chavada",
         image: data.image,
         category: data.category || "General",
@@ -57,8 +67,9 @@ async function getBlogPosts(): Promise<BlogPost[]> {
     }
 
     // Sort by date (newest first)
-    return posts.sort((a, b) => parseISO(b.date).getTime() - parseISO(a.date).getTime())
+    return posts.sort((a, b) => b.date.getTime() - a.date.getTime())
   } catch (error) {
+    console.error("Error reading blog posts:", error)
     // Return empty array if content directory doesn't exist yet
     return []
   }
@@ -136,7 +147,7 @@ export default async function BlogPage() {
                           {/* Meta info */}
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                              <span>{format(parseISO(post.date), "MMM dd, yyyy")}</span>
+                              <span>{format(post.date, "MMM dd, yyyy")}</span>
                               <div className="flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 <span>{post.readTime}</span>
