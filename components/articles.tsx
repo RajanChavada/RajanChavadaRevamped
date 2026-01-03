@@ -2,7 +2,8 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Clock, MessageCircle, Heart } from "lucide-react"
+import { ExternalLink, Clock, MessageCircle, Heart, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 const articles = [
   {
@@ -48,9 +49,9 @@ export function Articles() {
     <section id="articles" className="py-20 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Medium Articles</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Articles & Blog</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Sharing insights on finance, trading, and career development
+            Sharing insights on finance, trading, AI, and career development
           </p>
         </div>
 
@@ -122,6 +123,16 @@ export function Articles() {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* View All Posts Button */}
+        <div className="text-center mt-12">
+          <Button asChild size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full">
+            <Link href="/blog">
+              View All Blog Posts
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

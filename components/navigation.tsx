@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { Switch } from "@/components/ui/switch"
-import { Moon, Sun, Menu, X, FileText } from "lucide-react"
+import { Moon, Sun, Menu, X, FileText, BookOpen } from "lucide-react"
 import { useTheme } from "next-themes"
+import Link from "next/link"
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -73,6 +74,13 @@ export function Navigation() {
               >
                 Articles
               </button>
+              <Link
+                href="/blog"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors flex items-center gap-1"
+              >
+                <BookOpen className="h-4 w-4" />
+                Blog
+              </Link>
               <button
                 onClick={openResume}
                 className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors flex items-center gap-1"
@@ -132,9 +140,17 @@ export function Navigation() {
               >
                 Articles
               </button>
+              <Link
+                href="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-left text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 flex items-center gap-2"
+              >
+                <BookOpen className="h-4 w-4" />
+                Blog
+              </Link>
               <button
                 onClick={openResume}
-                className="block w-full text-left text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 flex items-center gap-2"
+                className="w-full text-left text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 flex items-center gap-2"
               >
                 <FileText className="h-4 w-4" />
                 Resume
