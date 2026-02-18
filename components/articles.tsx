@@ -2,6 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { ScrollRevealCard } from "@/components/ui/scroll-reveal-card"
 import { ExternalLink, Clock, MessageCircle, Heart, ArrowRight } from "lucide-react"
 import Link from "next/link"
 
@@ -57,71 +58,72 @@ export function Articles() {
 
         <div className="max-w-4xl mx-auto space-y-6">
           {articles.map((article, index) => (
-            <Card
-              key={index}
-              className="project-card group hover:shadow-lg transition-all duration-300 overflow-hidden"
-            >
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                  <div className="flex-1 order-2 sm:order-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="inline-block px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-100 rounded-full text-sm">
-                        {article.category}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-3 text-balance group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                      {article.title}
-                    </h3>
-
-                    <p className="text-muted-foreground mb-4 text-pretty leading-relaxed text-sm sm:text-base">
-                      {article.description}
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                        <span>{article.date}</span>
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          <span>{article.readTime}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-1">
-                            <Heart className="h-3 w-3" />
-                            <span>{article.claps}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MessageCircle className="h-3 w-3" />
-                            <span>{article.comments}</span>
-                          </div>
-                        </div>
+            <ScrollRevealCard key={index} delay={index * 0.15}>
+              <Card
+                className="project-card group hover:shadow-lg transition-all duration-300 overflow-hidden"
+              >
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                    <div className="flex-1 order-2 sm:order-1">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="inline-block px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-100 rounded-full text-sm">
+                          {article.category}
+                        </span>
                       </div>
 
-                      <Button
-                        asChild
-                        size="sm"
-                        className="backdrop-blur-md bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-700 dark:text-purple-100 rounded-full w-fit"
-                      >
-                        <a href={article.url} target="_blank" rel="noopener noreferrer">
-                          Read Article
-                          <ExternalLink className="ml-2 h-3 w-3" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-3 text-balance group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                        {article.title}
+                      </h3>
 
-                  <div className="flex-shrink-0 order-1 sm:order-2">
-                    <div className="w-full h-48 sm:w-32 sm:h-24 lg:w-40 lg:h-28 rounded-lg overflow-hidden bg-muted">
-                      <img
-                        src={article.thumbnail || "/placeholder.svg"}
-                        alt={`Thumbnail for ${article.title}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                      <p className="text-muted-foreground mb-4 text-pretty leading-relaxed text-sm sm:text-base">
+                        {article.description}
+                      </p>
+
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
+                          <span>{article.date}</span>
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            <span>{article.readTime}</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
+                              <Heart className="h-3 w-3" />
+                              <span>{article.claps}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <MessageCircle className="h-3 w-3" />
+                              <span>{article.comments}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <Button
+                          asChild
+                          size="sm"
+                          className="backdrop-blur-md bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-700 dark:text-purple-100 rounded-full w-fit"
+                        >
+                          <a href={article.url} target="_blank" rel="noopener noreferrer">
+                            Read Article
+                            <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="flex-shrink-0 order-1 sm:order-2">
+                      <div className="w-full h-48 sm:w-32 sm:h-24 lg:w-40 lg:h-28 rounded-lg overflow-hidden bg-muted">
+                        <img
+                          src={article.thumbnail || "/placeholder.svg"}
+                          alt={`Thumbnail for ${article.title}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </ScrollRevealCard>
           ))}
         </div>
 

@@ -1,11 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState, useMemo } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Github } from "lucide-react"
-import Image from "next/image"
+import { Github, Smartphone, Globe, Code2, Database, BarChart3, Languages, Dumbbell } from "lucide-react"
+import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline"
 
 const projects = [
   {
@@ -16,6 +15,8 @@ const projects = [
     tech: ["React Native", "FastAPI", "Google Cloud", "iOS Development"],
     github: "https://github.com/RajanChavada/Plyce",
     featured: true,
+    category: "Mobile App",
+    icon: Smartphone,
   },
   {
     title: "Chill Bill - Financial Wellness Platform",
@@ -25,6 +26,8 @@ const projects = [
     tech: ["React", "TypeScript", "Cloudflare Workers", "Llama 2", "Plaid API"],
     github: "https://github.com/RajanChavada/Chill-Bill",
     featured: true,
+    category: "Web App",
+    icon: Globe,
   },
   {
     title: "FitCheck - Outfit Rating System",
@@ -33,6 +36,8 @@ const projects = [
     tech: ["Python", "Computer Vision", "Machine Learning", "Flask"],
     github: "https://github.com/RajanChavada/FitCheck",
     featured: false,
+    category: "AI/ML",
+    icon: Code2,
   },
   {
     title: "FinSightGPT - Trading Analysis Tool",
@@ -41,6 +46,8 @@ const projects = [
     tech: ["Python", "GPT API", "Financial Data", "React"],
     github: "https://github.com/RajanChavada/FInSightGPT",
     featured: false,
+    category: "AI/ML",
+    icon: BarChart3,
   },
   {
     title: "Arnold - Fitness Tracking App",
@@ -49,6 +56,8 @@ const projects = [
     tech: ["React Native", "Node.js", "MongoDB", "Health APIs"],
     github: "https://github.com/RajanChavada/Arnold",
     featured: false,
+    category: "Mobile App",
+    icon: Dumbbell,
   },
   {
     title: "ASL Translator",
@@ -57,6 +66,8 @@ const projects = [
     tech: ["Python", "OpenCV", "TensorFlow", "Computer Vision"],
     github: "https://github.com/RajanChavada/asl-translator",
     featured: false,
+    category: "AI/ML",
+    icon: Languages,
   },
 ]
 
@@ -71,8 +82,23 @@ export function Projects() {
     ? displayedProjects.filter((project) => project.tech.includes(selectedTech))
     : displayedProjects
 
+  const timelineData: TimelineItem[] = useMemo(() => {
+    return filteredProjects.map((project, index) => ({
+      id: index + 1,
+      title: project.title,
+      date: "2024",
+      content: project.description,
+      category: project.category,
+      icon: project.icon || Code2,
+      relatedIds: [(index + 1) % filteredProjects.length + 1],
+      status: "completed",
+      energy: 60 + (index * 15) % 40,
+      github: project.github,
+    }))
+  }, [filteredProjects])
+
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" className="py-20 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
@@ -87,11 +113,10 @@ export function Projects() {
               <button
                 key={`${tech}-${index}`}
                 onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 ${
-                  selectedTech === tech
-                    ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-100 shadow-lg"
-                    : "bg-white/10 dark:bg-black/10 border-white/20 dark:border-white/10 text-foreground hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-pink-500/10"
-                }`}
+                className={`whitespace-nowrap px-4 py-2 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 ${selectedTech === tech
+                  ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-100 shadow-lg"
+                  : "bg-white/10 dark:bg-black/10 border-white/20 dark:border-white/10 text-foreground hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-pink-500/10"
+                  }`}
               >
                 {tech}
               </button>
@@ -115,64 +140,8 @@ export function Projects() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
-            <Card
-              key={index}
-              className={`project-card group cursor-pointer ${project.featured ? "ring-2 ring-primary/20" : ""} ${
-                index % 3 === 1 ? "md:mt-8" : ""
-              } ${index % 4 === 3 ? "lg:mt-16" : ""}`}
-              style={{
-                transform: `rotate(${(index % 2 === 0 ? 1 : -1) * (Math.random() * 2)}deg)`,
-              }}
-            >
-              <CardHeader className="p-0">
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    width={300}
-                    height={200}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  {project.featured && <Badge className="absolute top-3 left-3 bg-primary">Featured</Badge>}
-                </div>
-              </CardHeader>
-              <CardContent className="p-6">
-                <CardTitle className="text-xl mb-3 group-hover:text-primary transition-colors">
-                  {project.title}
-                </CardTitle>
-                <p className="text-muted-foreground mb-4 text-sm text-pretty">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech) => (
-                    <Badge
-                      key={tech}
-                      variant="outline"
-                      className={`text-xs cursor-pointer transition-colors bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-700 dark:text-purple-100 hover:from-purple-500/30 hover:to-pink-500/30 ${
-                        selectedTech === tech ? "ring-2 ring-purple-500/50" : ""
-                      }`}
-                      onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex justify-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    asChild
-                    className="backdrop-blur-md bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 hover:from-purple-500/20 hover:to-pink-500/20 hover:border-purple-500/50 text-purple-700 dark:text-purple-100 rounded-full"
-                  >
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4 mr-2" />
-                      GitHub
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="w-full">
+          <RadialOrbitalTimeline timelineData={timelineData} />
         </div>
 
         {projects.length > 6 && (
