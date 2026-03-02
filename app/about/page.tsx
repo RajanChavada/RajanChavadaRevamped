@@ -5,7 +5,7 @@ import { MinimalAboutPage } from "../../components/minimal/minimal-about-page"
 
 export const metadata: Metadata = {
   title: "About | Rajan Chavada",
-  description: "About Rajan Chavada - Software Developer & Cloud Solutions Architect",
+  description: "About Rajan Chavada - Machine Learning Software Engineer & Cloud Solutions Architect",
 }
 
 export default function AboutPage() {
