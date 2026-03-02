@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Mail, Linkedin } from "lucide-react"
-import Image from "next/image"
 import { FloatingPaths } from "@/components/ui/background-paths"
 
 export function Hero() {
@@ -28,17 +27,6 @@ export function Hero() {
       {/* Hero content layer */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className={`space-y-6 sm:space-y-8 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}>
-          <div className="relative inline-block">
-            <Image
-              src="/images/rajan-portrait.png"
-              alt="Rajan Chavada"
-              width={160}
-              height={160}
-              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-2xl mx-auto mb-6 sm:mb-8 animate-float shadow-2xl object-contain"
-              priority
-            />
-          </div>
-
           <div className="space-y-3 sm:space-y-4">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-balance">
               <span className="text-purple-600 dark:text-purple-400 drop-shadow-lg">Rajan</span>{" "}
