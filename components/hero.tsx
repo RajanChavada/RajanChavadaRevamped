@@ -85,6 +85,17 @@ export function Hero() {
               </a>
             </Button>
           </div>
+
+          {/* RC Logo - centered below hero content */}
+          <div className="flex justify-center pt-8 sm:pt-12">
+            <Image
+              src="/images/rc-logo.png"
+              alt="RC Logo"
+              width={80}
+              height={80}
+              className="w-16 h-16 sm:w-20 sm:h-20 opacity-90"
+            />
+          </div>
         </div>
       </div>
     </section>

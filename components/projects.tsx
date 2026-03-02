@@ -3,34 +3,69 @@
 import { useState, useMemo } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Github, Smartphone, Globe, Code2, Database, BarChart3, Languages, Dumbbell } from "lucide-react"
+import { Github, Smartphone, Cpu, Users, Globe, Code2 } from "lucide-react"
 import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline"
 
 const projects = [
   {
-    title: "Plyce - Local Restaurant Discovery",
+    title: "PhysioPoint",
     description:
-      "React Native iOS app streamlining restaurant discovery with location-based search and Google Cloud Places API integration.",
-    image: "/restaurant-discovery-app.jpg",
-    tech: ["React Native", "FastAPI", "Google Cloud", "iOS Development"],
-    github: "https://github.com/RajanChavada/Plyce",
+      "Apple Swift Student Challenge 2026. iOS/iPadOS rehabilitation app—recovery without the cost, from home. ARKit body tracking measures joint angles in real time, performing the same assessment a physiotherapist does manually.",
+    image: "/images/physiopoint-mockup.png",
+    tech: ["Swift", "SwiftUI", "ARKit", "RealityKit", "iOS"],
+    github: "https://github.com/RajanChavada/PhysioPoint",
+    demo: "https://www.youtube.com/watch?v=2WARVVFpDEo",
     featured: true,
-    category: "Mobile App",
+    category: "Mobile / AR",
     icon: Smartphone,
   },
   {
-    title: "Chill Bill - Financial Wellness Platform",
+    title: "NVIDIA Alert Triage Agent",
     description:
-      "Gen Z financial literacy platform merging budgeting with mental health support, featuring sentiment analysis and gamified progress tracking.",
+      "Agentic SRE layer powered by NVIDIA Nemotron-70B. LangGraph cyclic multi-agent workflow automates the observability crawl across DCGM, Kubernetes, Kafka, and Elasticsearch. ~60% MTTR reduction.",
+    image: "/images/nvidia-triage-screenshot.png",
+    tech: ["LangChain", "LangGraph", "NVIDIA NIM", "Kafka", "MCP"],
+    github: "https://lnkd.in/e7ZAgfuY",
+    demo: "https://lnkd.in/eBPmv7AQ",
+    featured: true,
+    category: "AI / SRE",
+    icon: Cpu,
+  },
+  {
+    title: "Badge",
+    description:
+      "U of T Hacks 2026 Winner. Vectorizing professional identity—PCA on 728-dim vector → 3D knowledge graph. AI-extracted identity from resume generates talking points. ~86% of recruiters said conversations felt less transactional.",
+    image: "/images/badge-screenshot.png",
+    tech: ["React", "TypeScript", "Convex", "Gemini", "Snowflake"],
+    github: "https://github.com/RajanChavada/Badge",
+    demo: "https://badge-sigma.vercel.app",
+    videoEmbed: "https://www.linkedin.com/embed/feed/update/urn:li:activity:7420663481743425536",
+    featured: true,
+    category: "Web App",
+    icon: Users,
+  },
+  {
+    title: "Plyce",
+    description: "React Native iOS app for local restaurant discovery with location-based search and Google Cloud Places API.",
+    image: "/images/plyce-screenshot.png",
+    tech: ["React Native", "FastAPI", "Google Cloud", "iOS"],
+    github: "https://github.com/RajanChavada/Plyce",
+    featured: false,
+    category: "Mobile App",
+    icon: Globe,
+  },
+  {
+    title: "Chill Bill",
+    description: "Gen Z financial literacy platform merging budgeting with mental health support, sentiment analysis, and gamified progress tracking.",
     image: "/financial-wellness-app-dashboard.png",
     tech: ["React", "TypeScript", "Cloudflare Workers", "Llama 2", "Plaid API"],
     github: "https://github.com/RajanChavada/Chill-Bill",
-    featured: true,
+    featured: false,
     category: "Web App",
     icon: Globe,
   },
   {
-    title: "FitCheck - Outfit Rating System",
+    title: "FitCheck",
     description: "AI-powered outfit rating and recommendation system with computer vision for style analysis.",
     image: "/fashion-outfit-rating-app.jpg",
     tech: ["Python", "Computer Vision", "Machine Learning", "Flask"],
@@ -38,36 +73,6 @@ const projects = [
     featured: false,
     category: "AI/ML",
     icon: Code2,
-  },
-  {
-    title: "FinSightGPT - Trading Analysis Tool",
-    description: "AI-powered financial analysis tool providing market insights and trading recommendations.",
-    image: "/financial-trading-analysis-dashboard.jpg",
-    tech: ["Python", "GPT API", "Financial Data", "React"],
-    github: "https://github.com/RajanChavada/FInSightGPT",
-    featured: false,
-    category: "AI/ML",
-    icon: BarChart3,
-  },
-  {
-    title: "Arnold - Fitness Tracking App",
-    description: "Comprehensive fitness tracking application with workout planning and progress monitoring.",
-    image: "/fitness-tracking-app-interface.png",
-    tech: ["React Native", "Node.js", "MongoDB", "Health APIs"],
-    github: "https://github.com/RajanChavada/Arnold",
-    featured: false,
-    category: "Mobile App",
-    icon: Dumbbell,
-  },
-  {
-    title: "ASL Translator",
-    description: "Real-time American Sign Language translation using computer vision and machine learning.",
-    image: "/sign-language-translation-app.png",
-    tech: ["Python", "OpenCV", "TensorFlow", "Computer Vision"],
-    github: "https://github.com/RajanChavada/asl-translator",
-    featured: false,
-    category: "AI/ML",
-    icon: Languages,
   },
 ]
 
@@ -86,7 +91,7 @@ export function Projects() {
     return filteredProjects.map((project, index) => ({
       id: index + 1,
       title: project.title,
-      date: "2024",
+      date: "2025",
       content: project.description,
       category: project.category,
       icon: project.icon || Code2,
@@ -94,6 +99,8 @@ export function Projects() {
       status: "completed",
       energy: 60 + (index * 15) % 40,
       github: project.github,
+      demo: project.demo,
+      videoEmbed: project.videoEmbed,
     }))
   }, [filteredProjects])
 

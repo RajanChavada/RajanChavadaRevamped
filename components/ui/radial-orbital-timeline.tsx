@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap, Github } from "lucide-react";
+import { ArrowRight, Link, Zap, Github, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +16,8 @@ export interface TimelineItem {
     status: "completed" | "in-progress" | "pending";
     energy: number;
     github?: string;
+    demo?: string;
+    videoEmbed?: string;
 }
 
 interface RadialOrbitalTimelineProps {
@@ -282,20 +284,47 @@ export default function RadialOrbitalTimeline({
                                             <p className="line-clamp-3">{item.content}</p>
 
                                             <div className="mt-4 pt-3 border-t border-gray-100 dark:border-white/10">
-                                                {item.github && (
-                                                    <div className="mb-3">
+                                                <div className="flex flex-col gap-2 mb-3">
+                                                    {item.github && (
                                                         <Button
                                                             variant="outline"
                                                             size="sm"
                                                             className="w-full text-xs h-7 gap-2 bg-gray-50 border-gray-200 text-gray-900 hover:bg-gray-100 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20"
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                window.open(item.github, '_blank');
+                                                                window.open(item.github!, '_blank');
                                                             }}
                                                         >
                                                             <Github size={12} />
                                                             View Code
                                                         </Button>
+                                                    )}
+                                                    {item.demo && (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="w-full text-xs h-7 gap-2 bg-gray-50 border-gray-200 text-gray-900 hover:bg-gray-100 dark:bg-white/10 dark:border-white/20 dark:text-white dark:hover:bg-white/20"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                window.open(item.demo!, '_blank');
+                                                            }}
+                                                        >
+                                                            <ExternalLink size={12} />
+                                                            View Demo
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                                {item.videoEmbed && (
+                                                    <div className="mb-3 rounded overflow-hidden">
+                                                        <iframe
+                                                            src={item.videoEmbed}
+                                                            height="200"
+                                                            width="100%"
+                                                            frameBorder="0"
+                                                            allowFullScreen
+                                                            title="Project demo"
+                                                            className="min-w-full"
+                                                        />
                                                     </div>
                                                 )}
                                                 <div className="flex justify-between items-center text-xs mb-1">
