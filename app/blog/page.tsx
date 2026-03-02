@@ -1,7 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { BlogPostList } from "@/components/blog-post-list"
-import { MinimalFooter } from "@/components/minimal"
+import { MinimalNav, MinimalBlogPosts, MinimalFooter } from "@/components/minimal"
 import { ArrowLeft } from "lucide-react"
 import { getBlogPosts } from "@/lib/get-blog-posts"
 
@@ -14,12 +13,13 @@ export default async function BlogPage() {
   const posts = await getBlogPosts()
 
   return (
-    <main className="min-h-screen bg-ivory">
-      <div className="max-w-2xl mx-auto px-6 py-12 md:py-16">
+    <main className="min-h-screen bg-background">
+      <MinimalNav />
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12 md:py-16">
         {/* Back to Home */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sage hover:text-forest-green transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-12 text-base"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Home
@@ -27,16 +27,22 @@ export default async function BlogPage() {
 
         {/* Header */}
         <div className="mb-12">
-          <h1 className="font-serif text-3xl font-bold text-forest-green mb-2">Blog</h1>
-          <p className="text-sage text-sm">
+          <h1 className="font-serif text-3xl font-bold text-foreground mb-2">Blog</h1>
+          <p className="text-muted-foreground text-base">
             Thoughts on AI, finance, trading, and software development
           </p>
         </div>
 
-        {/* Blog posts */}
-        <div className="space-y-6">
-          <BlogPostList posts={posts} />
-        </div>
+        {/* Blog posts — dashed format */}
+        <MinimalBlogPosts
+          posts={posts.map((p) => ({
+            slug: p.slug,
+            title: p.title,
+            date: p.date,
+            category: p.category,
+          }))}
+          showAllLink={false}
+        />
 
         <MinimalFooter />
       </div>

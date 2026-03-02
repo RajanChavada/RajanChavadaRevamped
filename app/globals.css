@@ -45,31 +45,30 @@
 }
 
 .dark {
-  /* Updated dark mode tokens with purple theme */
-  --background: oklch(0.08 0 0);
-  /* Very dark background */
-  --foreground: oklch(0.95 0 0);
-  /* Light text */
-  --card: oklch(0.12 0 0);
-  /* Dark card background */
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.75 0.15 280);
-  /* Lighter purple for dark mode */
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.15 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.7 0.12 300);
-  /* Purple accent for dark mode */
-  --accent-foreground: oklch(0.08 0 0);
+  /* Forest Canopy dark mode — inverted colors */
+  --forest-green: #8fbc8f;
+  --sage: #b8c4a8;
+  --olive: #c5d0b8;
+  --ivory: #1a1f1a;
+  --background: #1a1f1a;
+  --foreground: #faf9f6;
+  --card: #232a23;
+  --card-foreground: #faf9f6;
+  --popover: #232a23;
+  --popover-foreground: #faf9f6;
+  --primary: #8fbc8f;
+  --primary-foreground: #1a1f1a;
+  --secondary: #2d352d;
+  --secondary-foreground: #faf9f6;
+  --muted: #2d352d;
+  --muted-foreground: #b8c4a8;
+  --accent: #7d8471;
+  --accent-foreground: #faf9f6;
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: oklch(0.95 0 0);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.12 0 0);
-  --ring: oklch(0.75 0.15 280);
+  --border: #3d453d;
+  --input: #232a23;
+  --ring: #8fbc8f;
   --chart-1: oklch(0.75 0.15 280);
   --chart-2: oklch(0.65 0.15 180);
   --chart-3: oklch(0.6 0.15 120);
@@ -89,10 +88,10 @@
   --font-sans: var(--font-libre-sans), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-libre-baskerville), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono);
-  --color-forest-green: #2d4a2b;
-  --color-sage: #7d8471;
-  --color-olive: #a4ac86;
-  --color-ivory: #faf9f6;
+  --color-forest-green: var(--forest-green);
+  --color-sage: var(--sage);
+  --color-olive: var(--olive);
+  --color-ivory: var(--ivory);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -137,7 +136,11 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base;
+  }
+
+  html {
+    font-size: 17px;
   }
 }
 

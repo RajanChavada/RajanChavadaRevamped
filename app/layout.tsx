@@ -24,6 +24,11 @@ export const metadata: Metadata = {
   generator: "v0.app",
 }
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,9 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans ${libreBaskerville.variable} ${sourceSans.variable} ${GeistMono.variable} antialiased`}>
+      <body className={`font-sans ${libreBaskerville.variable} ${sourceSans.variable} ${GeistMono.variable} antialiased overflow-x-hidden`}>
         <Suspense fallback={null}>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="rajan-theme">
             {children}
           </ThemeProvider>
         </Suspense>
