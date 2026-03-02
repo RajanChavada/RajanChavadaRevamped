@@ -15,11 +15,11 @@ export function MinimalSocial() {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sage hover:text-forest-green transition-colors flex items-center gap-2"
+          className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base"
           aria-label={label}
         >
           <Icon className="h-4 w-4" />
-          <span className="text-sm">{label}</span>
+          <span>{label}</span>
         </a>
       ))}
     </div>

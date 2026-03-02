@@ -5,42 +5,66 @@ interface BlogPost {
   slug: string
   title: string
   date: string
+  category?: string
 }
 
-export function MinimalBlogPosts({ posts }: { posts: BlogPost[] }) {
+interface MinimalBlogPostsProps {
+  posts: BlogPost[]
+  showAllLink?: boolean
+}
+
+export function MinimalBlogPosts({ posts, showAllLink = true }: MinimalBlogPostsProps) {
   if (posts.length === 0) {
     return (
-      <section className="py-12">
-        <h2 className="font-serif text-xl font-bold text-forest-green mb-6">Posts</h2>
-        <p className="text-sage text-sm">No posts yet. Check back soon.</p>
+      <section id="posts" className="py-12">
+        <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
+          Posts
+        </h2>
+        <p className="text-muted-foreground text-base">No posts yet. Check back soon.</p>
       </section>
     )
   }
 
   return (
-      <section className="py-12">
-        <h2 className="font-serif text-xl font-bold text-forest-green mb-6">Posts</h2>
-      <ul className="space-y-3">
+    <section id="posts" className="py-12">
+      <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
+        Posts
+      </h2>
+      <ul className="space-y-4">
         {posts.map((post) => (
-          <li key={post.slug}>
+          <li
+            key={post.slug}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+          >
             <Link
               href={`/blog/${post.slug}`}
-              className="text-forest-green hover:underline"
+              className="text-foreground hover:underline text-base flex-1 min-w-0"
             >
               {post.title}
+              {post.category && (
+                <span className="text-muted-foreground italic ml-1">
+                  {" "}
+                  {post.category}
+                </span>
+              )}
             </Link>
-            <span className="text-sage text-sm ml-2">
+            <span className="text-muted-foreground text-base sm:ml-4 sm:shrink-0 flex items-center gap-2">
+              <span className="hidden sm:inline text-muted-foreground/50">
+                — — — — — — — — — —
+              </span>
               {format(new Date(post.date), "MMM d, yyyy")}
             </span>
           </li>
         ))}
       </ul>
-      <Link
-        href="/blog"
-        className="inline-block mt-4 text-sage text-sm hover:underline"
-      >
-        See all posts →
-      </Link>
+      {showAllLink && (
+        <Link
+          href="/blog"
+          className="inline-block mt-6 text-muted-foreground text-base hover:text-foreground transition-colors"
+        >
+          See all posts →
+        </Link>
+      )}
     </section>
   )
 }
