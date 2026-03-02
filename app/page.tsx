@@ -1,33 +1,32 @@
-import { Navigation } from "@/components/navigation"
-import { Hero } from "@/components/hero"
-import { Experience } from "@/components/experience"
-import { Projects } from "@/components/projects"
-import { Skills } from "@/components/skills"
-import { Articles } from "@/components/articles"
-import { Footer } from "@/components/footer"
-import { FloatingSocial } from "@/components/floating-social"
+import { getBlogPosts } from "@/lib/get-blog-posts"
+import {
+  MinimalHero,
+  MinimalExperience,
+  MinimalProjects,
+  MinimalBlogPosts,
+  MinimalAbout,
+  MinimalFooter,
+} from "@/components/minimal"
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getBlogPosts()
+
   return (
-    <main className="min-h-screen bg-background">
-      <Navigation />
-      <div id="hero">
-        <Hero />
+    <main className="min-h-screen bg-ivory">
+      <div className="max-w-2xl mx-auto px-6 py-12 md:py-16">
+        <MinimalHero />
+        <MinimalExperience />
+        <MinimalProjects />
+        <MinimalBlogPosts
+          posts={posts.map((p) => ({
+            slug: p.slug,
+            title: p.title,
+            date: p.date,
+          }))}
+        />
+        <MinimalAbout />
+        <MinimalFooter />
       </div>
-      <div id="experience">
-        <Experience />
-      </div>
-      <div id="projects">
-        <Projects />
-      </div>
-      <div id="skills">
-        <Skills />
-      </div>
-      <div id="articles">
-        <Articles />
-      </div>
-      <Footer />
-      <FloatingSocial />
     </main>
   )
 }

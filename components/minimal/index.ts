@@ -1,0 +1,7 @@
+export { MinimalHero } from "./minimal-hero"
+export { MinimalExperience } from "./minimal-experience"
+export { MinimalProjects } from "./minimal-projects"
+export { MinimalBlogPosts } from "./minimal-blog-posts"
+export { MinimalAbout } from "./minimal-about"
+export { MinimalSocial } from "./minimal-social"
+export { MinimalFooter } from "./minimal-footer"
