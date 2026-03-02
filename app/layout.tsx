@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   title: "Rajan Chavada - Software Developer",
   description: "Portfolio of Rajan Chavada - Software Developer & Cloud Solutions Architect",
   generator: "v0.app",
+  icons: {
+    icon: "/images/rc-logo.png",
+    apple: "/images/rc-logo.png",
+  },
 }
 
 export const viewport = {
