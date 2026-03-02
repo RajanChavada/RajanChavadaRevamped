@@ -30,11 +30,11 @@ export function Hero() {
         <div className={`space-y-6 sm:space-y-8 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}>
           <div className="relative inline-block">
             <Image
-              src="/images/rajan-headshot.jpg"
+              src="/images/rajan-portrait.png"
               alt="Rajan Chavada"
               width={160}
               height={160}
-              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-2xl mx-auto mb-6 sm:mb-8 animate-float shadow-2xl object-cover"
+              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-2xl mx-auto mb-6 sm:mb-8 animate-float shadow-2xl object-contain"
               priority
             />
           </div>
@@ -84,17 +84,6 @@ export function Hero() {
                 LinkedIn
               </a>
             </Button>
-          </div>
-
-          {/* RC Logo - centered below hero content */}
-          <div className="flex justify-center pt-8 sm:pt-12">
-            <Image
-              src="/images/rc-logo.png"
-              alt="RC Logo"
-              width={80}
-              height={80}
-              className="w-16 h-16 sm:w-20 sm:h-20 opacity-90"
-            />
           </div>
         </div>
       </div>

@@ -10,16 +10,16 @@ export function MinimalHero() {
         <p className="text-lg sm:text-xl text-muted-foreground mb-6">
           Software Developer & Cloud Solutions Architect
         </p>
-        <blockquote className="text-muted-foreground text-lg border-l-2 border-muted-foreground pl-4 italic mb-8">
+        <blockquote className="text-muted-foreground text-lg border-l-2 border-muted-foreground pl-4 italic">
           Perhaps you want to learn more about me?
         </blockquote>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-8">
           <Image
-            src="/images/rc-logo.png"
-            alt="RC Logo"
-            width={64}
-            height={64}
-            className="w-16 h-16 opacity-90"
+            src="/images/rajan-portrait.png"
+            alt="Rajan Chavada"
+            width={120}
+            height={120}
+            className="w-24 h-24 sm:w-28 sm:h-28 object-contain"
           />
         </div>
       </div>
