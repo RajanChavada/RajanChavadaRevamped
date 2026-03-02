@@ -35,7 +35,7 @@ export function Footer() {
               </a>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+              <a href="/Rajan_Chavada_Resume_Summer2026.pdf" target="_blank" rel="noopener noreferrer">
                 <FileText className="h-5 w-5" />
               </a>
             </Button>

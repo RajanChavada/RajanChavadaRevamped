@@ -32,7 +32,7 @@ export function Navigation() {
   }
 
   const openResume = () => {
-    window.open("/Rajan_Chavada_Resume.pdf", "_blank")
+    window.open("/Rajan_Chavada_Resume_Summer2026.pdf", "_blank")
     setMobileMenuOpen(false)
   }
 

@@ -48,3 +48,5 @@ coverage/
 # Optional: local certificates
 *.pem
 *.key
+
+.cursor/

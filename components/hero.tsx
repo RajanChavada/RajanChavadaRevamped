@@ -49,7 +49,7 @@ export function Hero() {
             </p>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty px-4">
               Passionate about building scalable solutions and creating exceptional user experiences. Currently working
-              at Intact Insurance as a Cloud Technical Advisor.
+              at Borealis AI (RBC) as an ML/AI & Infrastructure Scientist.
             </p>
           </div>
 

@@ -7,15 +7,33 @@ import { Building2, Calendar, MapPin } from "lucide-react"
 
 const experiences = [
   {
-    title: "Cloud Technical Advisor I",
+    title: "ML/AI & Infrastructure Scientist",
+    company: "Borealis AI | Royal Bank of Canada",
+    location: "Toronto, ON",
+    period: "Dec 2025 – Present",
+    date: "2025",
+    bullets: [
+      "Led migration of 3 mission-critical credit capacity ML models to a new NVIDIA DGX A100/H100 OCP cluster by reconfiguring Triton inference endpoints, K8 deployments, and CI/CD pipelines, resulting in zero-downtime cutover and 99.95% production uptime during cluster deprecation.",
+      "Reduced P95 inference latency by 25% and increased throughput 2× by optimizing GPU-based model serving (dynamic batching, quantization, container tuning) and conducting structured load/performance testing prior to release.",
+      "Improved deployment velocity by 60% by automating model build, validation, and OpenShift rollout workflows using GitHub Actions, YAML configurations, and containerized PyTorch/TensorFlow services, cutting release cycles from days to hours.",
+      "Enhanced production reliability and security by implementing mTLS sidecar configurations and real-time monitoring for SLA enforcement (99.9%+), reducing incident detection time by 40% and ensuring encrypted service-to-service communication.",
+    ],
+    skills: ["PyTorch", "TensorFlow", "Triton", "Kubernetes", "OpenShift", "GitHub Actions", "mTLS"],
+    side: "right",
+  },
+  {
+    title: "Cloud Engineer",
     company: "Intact Insurance",
     location: "Toronto, ON",
-    period: "Sept 2025 – Present",
+    period: "Sept 2025 – Dec 2025",
     date: "2025",
-    description:
-      "Automated provisioning & maintenance of AWS infrastructure (IAM, EC2, S3, ELB) with Terraform, cutting manual effort by 40%. Collaborate with 10+ cross-functional teams to assess cloud requirements and deliver tailored infrastructure.",
-    skills: ["AWS", "Terraform", "OCP", "ROSA", "Infrastructure as Code"],
-    side: "right",
+    bullets: [
+      "Reduced manual infrastructure provisioning time by 65% by designing Terraform modules for 190+ AWS accounts, enabling self-service infrastructure-as-code and accelerating ML workload deployment.",
+      "Built ETL pipelines that ingested infrastructure telemetry and system logs into Amazon Bedrock (generative AI service), enabling autonomous insights and recommendations for cloud optimization and compliance checks.",
+      "Deployed vulnerability management automation across 50+ Kubernetes/OpenShift clusters via DaemonSet, achieving 95% compliance coverage and cutting security audit time by 75% using SageMaker-based anomaly detection and automated remediation workflows.",
+    ],
+    skills: ["AWS", "Terraform", "Kubernetes", "OpenShift", "Amazon Bedrock", "SageMaker"],
+    side: "left",
   },
   {
     title: "Quantitative Software/AI Engineer",
@@ -23,10 +41,14 @@ const experiences = [
     location: "Toronto, ON",
     period: "May 2025 – Aug 2025",
     date: "2025",
-    description:
-      "Engineered patent-pending multi-agent pipelines with LangChain/LangGraph, improving front-office research efficiency by 30%. Delivered dynamic natural language to ECharts feature for RBC Aiden, adopted by 18,000+ traders.",
-    skills: ["LangChain", "LangGraph", "ECharts", "CI/CD", "Docker", "OCP"],
-    side: "left",
+    bullets: [
+      "Designed and shipped a multi-agent research assistant over Snowflake using Python (FastAPI) microservices and well-defined APIs, improving research efficiency by 60% for 10,000+ daily internal queries and integrating multiple LLM tools.",
+      "Built Kafka-based data pipelines processing 50k+ daily articles with automated performance monitoring, maintaining sub-second latency for 18,000+ users in a large distributed environment, and feeding downstream ML ranking models.",
+      "Reduced CI/CD deployment time by 50% by containerizing services with multi-stage Docker builds and Tekton pipelines across 8 Kubernetes/OpenShift clusters, accelerating safe rollout of new ML and backend components.",
+      "Developed and optimized forecasting services (Prophet/XGBoost) to achieve 3× higher throughput while preserving accuracy, balancing performance, cost, and maintainability for batch inference workloads.",
+    ],
+    skills: ["FastAPI", "Snowflake", "Kafka", "Docker", "Tekton", "Prophet", "XGBoost"],
+    side: "right",
   },
   {
     title: "Full-Stack Software Engineer Intern (Client Services)",
@@ -34,21 +56,26 @@ const experiences = [
     location: "Toronto, ON",
     period: "May 2024 – Aug 2024",
     date: "2024",
-    description:
-      "Led development of 25+ production client-facing applications. Utilized DOM refactoring, lazy loading, and JS bundle reduction to reduce application latency times by 10%, driving client retention.",
-    skills: ["React", "Node.js", "JavaScript", "Performance Optimization", "Jenkins"],
-    side: "right",
+    bullets: [
+      "Built a client-facing AI chatbot leveraging RBC's internal LLM gateway and a vector search database (semantic embeddings) to provide RAG-powered responses to investor service inquiries, reducing support tickets by 22%.",
+      "Implemented semantic search and vector-optimized queries over investor portal documentation, enabling the chatbot to retrieve contextually relevant answers with high precision for common client questions about trading platforms and account management.",
+      "Built tooling and performance monitoring for the React-based trading platform serving 4,500 DAU, using Lighthouse CI to profile 12+ configs and catch performance regressions before release.",
+    ],
+    skills: ["React", "RAG", "Vector Search", "Lighthouse CI", "LLM"],
+    side: "left",
   },
   {
-    title: "Full-Stack Software Engineer Intern (Trading & Execution Services)",
+    title: "Full-Stack Software Engineer Intern (Global Equities)",
     company: "Royal Bank of Canada | Capital Markets",
     location: "Toronto, ON",
     period: "May 2023 – Aug 2023",
     date: "2023",
-    description:
-      "Created a full-stack automation system for JIRA CVE's, eliminating repetitive workflows and reducing team overhead by 35%. Deployed a Flask + React.js app integrated with Jenkins-based CI/CD pipelines.",
-    skills: ["Flask", "React.js", "JIRA API", "Python", "Automation", "CI/CD"],
-    side: "left",
+    bullets: [
+      "Engineered internal CVE triage platform with React.js, Flask REST API, and weekly cron scheduling parsing P1 CVE data from Microsoft SSMS across 6+ sources, cutting production errors by 30% and developer triage time by ~40%.",
+      "Designed priority-based caching routing layer to stream P1 CVE to on-call engineers, reducing MTTA by 30% and achieving 99.8% SLA compliance with global equities trading schedule across 3 regional trading desks.",
+    ],
+    skills: ["Flask", "React.js", "REST API", "Python", "Automation", "CI/CD"],
+    side: "right",
   },
 ]
 
@@ -97,7 +124,7 @@ export function Experience() {
                   key={`line-${index}`}
                   className="absolute left-1/2 w-0.5 h-12 bg-gradient-to-b from-purple-400 to-pink-400 transform -translate-x-1/2 hidden md:block"
                   style={{
-                    top: `${(index + 1) * 25}%`,
+                    top: `${(index + 1) * (100 / experiences.length)}%`,
                   }}
                 />
               ),
@@ -150,7 +177,11 @@ export function Experience() {
                             </div>
                           </div>
 
-                          <p className="text-muted-foreground text-sm text-pretty">{exp.description}</p>
+                          <ul className="space-y-2 text-muted-foreground text-sm text-pretty list-disc list-inside">
+                            {exp.bullets.map((bullet, i) => (
+                              <li key={i}>{bullet}</li>
+                            ))}
+                          </ul>
 
                           <div className="flex flex-wrap gap-2">
                             {exp.skills.map((skill) => (
