@@ -1,6 +1,8 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { MinimalNav, MinimalBlogPosts, MinimalFooter } from "@/components/minimal"
+import { MinimalNav } from "../../components/minimal/minimal-nav"
+import { MinimalBlogPosts } from "../../components/minimal/minimal-blog-posts"
+import { MinimalFooter } from "../../components/minimal/minimal-footer"
 import { ArrowLeft } from "lucide-react"
 import { getBlogPosts } from "@/lib/get-blog-posts"
 

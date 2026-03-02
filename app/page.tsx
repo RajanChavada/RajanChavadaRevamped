@@ -1,13 +1,11 @@
 import { getBlogPosts } from "@/lib/get-blog-posts"
-import {
-  MinimalNav,
-  MinimalHero,
-  MinimalExperience,
-  MinimalProjects,
-  MinimalBlogPosts,
-  MinimalAbout,
-  MinimalFooter,
-} from "@/components/minimal"
+import { MinimalNav } from "../components/minimal/minimal-nav"
+import { MinimalHero } from "../components/minimal/minimal-hero"
+import { MinimalExperience } from "../components/minimal/minimal-experience"
+import { MinimalProjects } from "../components/minimal/minimal-projects"
+import { MinimalBlogPosts } from "../components/minimal/minimal-blog-posts"
+import { MinimalAbout } from "../components/minimal/minimal-about"
+import { MinimalFooter } from "../components/minimal/minimal-footer"
 
 export default async function Home() {
   const posts = await getBlogPosts()

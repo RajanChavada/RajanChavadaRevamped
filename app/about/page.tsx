@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
-import { MinimalNav, OnThisPageNav, MinimalAboutPage } from "@/components/minimal"
+import { MinimalNav } from "../../components/minimal/minimal-nav"
+import { OnThisPageNav } from "../../components/minimal/on-this-page-nav"
+import { MinimalAboutPage } from "../../components/minimal/minimal-about-page"
 
 export const metadata: Metadata = {
   title: "About | Rajan Chavada",
