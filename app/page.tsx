@@ -1,33 +1,23 @@
 import { Navigation } from "@/components/navigation"
 import { Hero } from "@/components/hero"
-import { Experience } from "@/components/experience"
 import { Projects } from "@/components/projects"
-import { Skills } from "@/components/skills"
-import { Articles } from "@/components/articles"
+import { Experience } from "@/components/experience"
+import { TechMatrix } from "@/components/tech-matrix"
+import { Writing } from "@/components/writing"
 import { Footer } from "@/components/footer"
-import { FloatingSocial } from "@/components/floating-social"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-bg-page">
       <Navigation />
-      <div id="hero">
+      <div id="main">
         <Hero />
-      </div>
-      <div id="experience">
-        <Experience />
-      </div>
-      <div id="projects">
         <Projects />
-      </div>
-      <div id="skills">
-        <Skills />
-      </div>
-      <div id="articles">
-        <Articles />
+        <Experience />
+        <TechMatrix />
+        <Writing />
       </div>
       <Footer />
-      <FloatingSocial />
     </main>
   )
 }

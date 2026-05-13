@@ -1,161 +1,371 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Github, Smartphone, Globe, Code2, Database, BarChart3, Languages, Dumbbell } from "lucide-react"
-import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline"
+import { useState } from "react"
+import { ArrowUpRight, ChevronDown, Github, Package } from "lucide-react"
+import { SectionHeading } from "@/components/ui/section-heading"
+import { TechChip } from "@/components/ui/tech-chip"
+import { cn } from "@/lib/utils"
 
-const projects = [
+interface ProjectLink {
+  label: string
+  href: string
+  primary?: boolean
+}
+
+interface Tier1Project {
+  title: string
+  subtitle: string
+  description: React.ReactNode
+  codeBlock?: { language: string; code: string }
+  tech: string[]
+  links: ProjectLink[]
+}
+
+interface Tier2Project {
+  title: string
+  badge?: string
+  description: string
+  tech: string[]
+  links: ProjectLink[]
+}
+
+interface LegacyProject {
+  name: string
+  description: string
+  tech: string
+  href?: string
+}
+
+const tier1Projects: Tier1Project[] = [
   {
-    title: "Plyce - Local Restaurant Discovery",
-    description:
-      "React Native iOS app streamlining restaurant discovery with location-based search and Google Cloud Places API integration.",
-    image: "/restaurant-discovery-app.jpg",
-    tech: ["React Native", "FastAPI", "Google Cloud", "iOS Development"],
-    github: "https://github.com/RajanChavada/Plyce",
-    featured: true,
-    category: "Mobile App",
-    icon: Smartphone,
+    title: "Rosetta",
+    subtitle:
+      "2,000+ downloads · adopted at RBC Borealis AI · interest from engineers at Google, Meta, Confluent",
+    description: (
+      <>
+        Open-source agentic-coding CLI. One command provisions agentic-coding rules,
+        MCP server hooks, and IDE prompts across 9 IDEs — Cursor, Windsurf, Claude Code,
+        and more. Multi-module Node.js npm package. Onboarded 2,000+ technical and
+        non-technical developers to agentic-coding workflows. Pitched to and adopted
+        internally by RBC Borealis AI.
+      </>
+    ),
+    codeBlock: {
+      language: "bash",
+      code: "npx rosettablueprint init",
+    },
+    tech: ["Node.js", "TypeScript", "npm", "MCP"],
+    links: [
+      { label: "npm", href: "https://www.npmjs.com/package/rosettablueprint", primary: true },
+      { label: "GitHub", href: "https://github.com/RajanChavada/rosetta" },
+    ],
   },
   {
-    title: "Chill Bill - Financial Wellness Platform",
-    description:
-      "Gen Z financial literacy platform merging budgeting with mental health support, featuring sentiment analysis and gamified progress tracking.",
-    image: "/financial-wellness-app-dashboard.png",
-    tech: ["React", "TypeScript", "Cloudflare Workers", "Llama 2", "Plaid API"],
-    github: "https://github.com/RajanChavada/Chill-Bill",
-    featured: true,
-    category: "Web App",
-    icon: Globe,
+    title: "Neurovn",
+    subtitle: "Open source · published to PyPI · live alpha at neurovn-alpha.vercel.app",
+    description: (
+      <>
+        Python SDK and CLI for tracing agentic AI workflows. Decorator-based
+        instrumentation (<code className="rounded bg-bg-subtle px-1.5 py-0.5 font-mono text-[0.85em]">@trace.agent</code>,{" "}
+        <code className="rounded bg-bg-subtle px-1.5 py-0.5 font-mono text-[0.85em]">@trace.tool</code>) captures
+        sessions, token usage, and tool calls across multi-agent pipelines. Paired with a
+        drag-and-drop visual canvas that costs and computes P95 latency for any cyclic or
+        DAG agent graph before a single API call, using Tarjan's SCC + topological sort
+        with Rust-bound tiktoken for instant token accounting.
+      </>
+    ),
+    codeBlock: {
+      language: "python",
+      code: `from neurovn import trace
+
+@trace.agent(name="Research Agent", model="gpt-4o")
+async def research(query: str): ...
+
+@trace.tool(name="Web Search", tool_category="mcp_server")
+async def web_search(query: str): ...`,
+    },
+    tech: [
+      "Python",
+      "TypeScript",
+      "LangGraph",
+      "Tarjan's SCC",
+      "Rust-bound tiktoken",
+      "PyPI",
+    ],
+    links: [
+      { label: "Live app", href: "https://neurovn-alpha.vercel.app/", primary: true },
+      { label: "PyPI", href: "https://pypi.org/project/neurovn/" },
+      { label: "GitHub", href: "https://github.com/RajanChavada/neurovn" },
+    ],
   },
   {
-    title: "FitCheck - Outfit Rating System",
-    description: "AI-powered outfit rating and recommendation system with computer vision for style analysis.",
-    image: "/fashion-outfit-rating-app.jpg",
-    tech: ["Python", "Computer Vision", "Machine Learning", "Flask"],
-    github: "https://github.com/RajanChavada/FitCheck",
-    featured: false,
-    category: "AI/ML",
-    icon: Code2,
-  },
-  {
-    title: "FinSightGPT - Trading Analysis Tool",
-    description: "AI-powered financial analysis tool providing market insights and trading recommendations.",
-    image: "/financial-trading-analysis-dashboard.jpg",
-    tech: ["Python", "GPT API", "Financial Data", "React"],
-    github: "https://github.com/RajanChavada/FInSightGPT",
-    featured: false,
-    category: "AI/ML",
-    icon: BarChart3,
-  },
-  {
-    title: "Arnold - Fitness Tracking App",
-    description: "Comprehensive fitness tracking application with workout planning and progress monitoring.",
-    image: "/fitness-tracking-app-interface.png",
-    tech: ["React Native", "Node.js", "MongoDB", "Health APIs"],
-    github: "https://github.com/RajanChavada/Arnold",
-    featured: false,
-    category: "Mobile App",
-    icon: Dumbbell,
-  },
-  {
-    title: "ASL Translator",
-    description: "Real-time American Sign Language translation using computer vision and machine learning.",
-    image: "/sign-language-translation-app.png",
-    tech: ["Python", "OpenCV", "TensorFlow", "Computer Vision"],
-    github: "https://github.com/RajanChavada/asl-translator",
-    featured: false,
-    category: "AI/ML",
-    icon: Languages,
+    title: "Agentic RAG for Hedge Funds",
+    subtitle: "Patent-pending (RBC, 2025) · in production across 18,000+ RBC traders · ~6 hours saved per workflow",
+    description: (
+      <>
+        The first agentic AI system to operate over proprietary client data — trade
+        details, holdings, and regulated disclosures — combined with external siloed
+        sources (Snowflake, RavenPack, Bloomberg, FactSet, 13F filings) and surfaced for
+        hedge fund managers. The novel contribution: hierarchical orchestrator-based
+        LangGraph workflows with human-in-the-loop validation and structured tool
+        orchestration in a regulated financial environment. No prior system applied
+        agentic AI over this class of client data; the patent covers the orchestration
+        pattern.
+      </>
+    ),
+    tech: [
+      "FastAPI",
+      "LangGraph",
+      "Kafka",
+      "Snowflake",
+      "RavenPack",
+      "Bloomberg API",
+      "FactSet",
+      "RAG",
+      "HITL validation",
+    ],
+    links: [
+      {
+        label: "LinkedIn write-up",
+        href: "https://www.linkedin.com/in/rajan-chavada/",
+        primary: true,
+      },
+    ],
   },
 ]
 
-const allTechnologies = Array.from(new Set(projects.flatMap((project) => project.tech)))
+const tier2Projects: Tier2Project[] = [
+  {
+    title: "PhysioPoint",
+    badge: "Apple Swift Student Challenge 2026",
+    description:
+      "ARKit body-tracking app for physiotherapy and rehabilitation. Measures joint angles in real time — performing the same assessment a physiotherapist performs manually — for people who can't access or afford clinical care.",
+    tech: ["SwiftUI", "ARKit", "RealityKit", "iOS 26 Foundation Models"],
+    links: [{ label: "GitHub", href: "https://github.com/RajanChavada" }],
+  },
+  {
+    title: "NVIDIA Alert Triage",
+    badge: "Agentic SRE for GPU clusters",
+    description:
+      "Cyclic multi-agent workflow powered by NVIDIA Nemotron-70B that acts as a lead engineer for GPU training clusters. Manages DCGM metrics, Kubernetes pod states, Kafka partition lags, distributed logs. ~60% MTTR reduction with real-time GPU/VRAM/thermal view, XID error detection, and ranked remediation plans.",
+    tech: ["LangChain", "LangGraph", "NVIDIA NIM", "Kafka", "Postgres", "MCP"],
+    links: [{ label: "GitHub", href: "https://github.com/RajanChavada" }],
+  },
+  {
+    title: "Badge",
+    badge: "U of T Hacks 2026 Winner",
+    description:
+      "Vectorizing professional identity for hackathons, conferences, and career fairs. PCA on 728-dimensional vector → 3D knowledge graph with cosine similarity between user and recruiter/company. AI-extracted identity from résumés (Gemini) generates personalized talking points per company. ~86% of recruiters said conversations felt less transactional.",
+    tech: ["React", "TypeScript", "Convex", "Clerk", "Gemini API", "ElevenLabs", "Snowflake"],
+    links: [{ label: "GitHub", href: "https://github.com/RajanChavada" }],
+  },
+]
+
+const legacyProjects: LegacyProject[] = [
+  {
+    name: "Plyce",
+    description: "Local restaurant discovery, iOS",
+    tech: "React Native · FastAPI · GCP",
+    href: "https://github.com/RajanChavada/Plyce",
+  },
+  {
+    name: "Chill Bill",
+    description: "Financial wellness for Gen Z",
+    tech: "React · Cloudflare Workers · Llama 2 · Plaid",
+    href: "https://github.com/RajanChavada/Chill-Bill",
+  },
+  {
+    name: "FitCheck",
+    description: "AI outfit rating",
+    tech: "Python CV · Flask",
+    href: "https://github.com/RajanChavada/FitCheck",
+  },
+  {
+    name: "FinSightGPT",
+    description: "Trading analysis tool",
+    tech: "Python · GPT API · React",
+    href: "https://github.com/RajanChavada/FInSightGPT",
+  },
+  {
+    name: "Arnold",
+    description: "Fitness tracking app",
+    tech: "React Native · Node.js · MongoDB",
+    href: "https://github.com/RajanChavada/Arnold",
+  },
+  {
+    name: "ASL Translator",
+    description: "CNN-based sign-language translator (Western AI team)",
+    tech: "Python · OpenCV · TensorFlow",
+    href: "https://github.com/RajanChavada/asl-translator",
+  },
+]
+
+function ProjectLinkRow({ links }: { links: ProjectLink[] }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+      {links.map((link, idx) => (
+        <a
+          key={link.href}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "inline-flex items-center gap-1 text-[14px] font-medium transition-colors duration-150",
+            link.primary
+              ? "text-accent hover:text-accent-hover"
+              : "text-text-secondary hover:text-text-primary",
+          )}
+        >
+          {link.label === "GitHub" && <Github className="h-3.5 w-3.5" strokeWidth={2} />}
+          {(link.label === "npm" || link.label === "PyPI") && (
+            <Package className="h-3.5 w-3.5" strokeWidth={2} />
+          )}
+          <span>{link.label}</span>
+          <ArrowUpRight className="h-3 w-3" strokeWidth={2} />
+        </a>
+      ))}
+    </div>
+  )
+}
 
 export function Projects() {
-  const [showAll, setShowAll] = useState(false)
-  const [selectedTech, setSelectedTech] = useState<string | null>(null)
-
-  const displayedProjects = showAll ? projects : projects.slice(0, 6)
-  const filteredProjects = selectedTech
-    ? displayedProjects.filter((project) => project.tech.includes(selectedTech))
-    : displayedProjects
-
-  const timelineData: TimelineItem[] = useMemo(() => {
-    return filteredProjects.map((project, index) => ({
-      id: index + 1,
-      title: project.title,
-      date: "2024",
-      content: project.description,
-      category: project.category,
-      icon: project.icon || Code2,
-      relatedIds: [(index + 1) % filteredProjects.length + 1],
-      status: "completed",
-      energy: 60 + (index * 15) % 40,
-      github: project.github,
-    }))
-  }, [filteredProjects])
+  const [showLegacy, setShowLegacy] = useState(false)
 
   return (
-    <section id="projects" className="py-20 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            A collection of projects showcasing my skills in full-stack development, AI/ML, and mobile applications
-          </p>
-        </div>
+    <section id="projects" className="py-20 sm:py-24">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Tier 1"
+          title="Open source & production"
+          description="Differentiated work that shipped to real users."
+        />
 
-        <div className="mb-12 overflow-hidden">
-          <div className="flex space-x-8 animate-scroll">
-            {[...allTechnologies, ...allTechnologies].map((tech, index) => (
-              <button
-                key={`${tech}-${index}`}
-                onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 ${selectedTech === tech
-                  ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-100 shadow-lg"
-                  : "bg-white/10 dark:bg-black/10 border-white/20 dark:border-white/10 text-foreground hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-pink-500/10"
-                  }`}
+        <ul className="space-y-12">
+          {tier1Projects.map((project) => (
+            <li
+              key={project.title}
+              className="rounded-xl border border-border bg-bg-elevated p-6 sm:p-7"
+            >
+              <header>
+                <h3 className="font-display text-[1.4rem] leading-tight text-text-primary">
+                  {project.title}
+                </h3>
+                <p className="mt-1.5 text-[13.5px] text-text-secondary">{project.subtitle}</p>
+              </header>
+
+              <div className="mt-5 text-[15.5px] leading-[1.65] text-text-primary">
+                {project.description}
+              </div>
+
+              {project.codeBlock && (
+                <pre className="mt-5 overflow-x-auto rounded-lg border border-border bg-bg-subtle px-4 py-3 font-mono text-[13.5px] leading-relaxed text-text-primary">
+                  <code>{project.codeBlock.code}</code>
+                </pre>
+              )}
+
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {project.tech.map((t) => (
+                  <TechChip key={t}>{t}</TechChip>
+                ))}
+              </div>
+
+              <div className="mt-6 border-t border-border pt-5">
+                <ProjectLinkRow links={project.links} />
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-20">
+          <SectionHeading
+            eyebrow="Tier 2"
+            title="Hackathons & showcases"
+            description="Built fast, judged externally, recognized."
+          />
+
+          <ul className="grid gap-6 sm:grid-cols-2">
+            {tier2Projects.map((project) => (
+              <li
+                key={project.title}
+                className="rounded-xl border border-border bg-bg-elevated p-5 sm:p-6"
               >
-                {tech}
-              </button>
+                <header>
+                  <h3 className="font-display text-[1.2rem] leading-tight text-text-primary">
+                    {project.title}
+                  </h3>
+                  {project.badge && (
+                    <p className="mt-1 text-[12.5px] font-medium text-accent">{project.badge}</p>
+                  )}
+                </header>
+
+                <p className="mt-4 text-[14.5px] leading-relaxed text-text-primary">
+                  {project.description}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <TechChip key={t}>{t}</TechChip>
+                  ))}
+                </div>
+
+                <div className="mt-5 border-t border-border pt-4">
+                  <ProjectLinkRow links={project.links} />
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        {selectedTech && (
-          <div className="text-center mb-8">
-            <Badge variant="outline" className="text-sm">
-              Showing projects with: {selectedTech}
-            </Badge>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedTech(null)}
-              className="ml-2 backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-pink-500/10"
-            >
-              Clear filter
-            </Button>
-          </div>
-        )}
+        <div className="mt-20">
+          <button
+            type="button"
+            onClick={() => setShowLegacy(!showLegacy)}
+            className="flex w-full items-center justify-between border-b border-border pb-3 text-left"
+            aria-expanded={showLegacy}
+          >
+            <span className="font-display text-[1.125rem] text-text-primary">
+              Legacy projects
+            </span>
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-text-muted transition-transform duration-200",
+                showLegacy && "rotate-180",
+              )}
+              strokeWidth={2}
+            />
+          </button>
 
-        <div className="w-full">
-          <RadialOrbitalTimeline timelineData={timelineData} />
+          {showLegacy && (
+            <ul className="mt-4 divide-y divide-border">
+              {legacyProjects.map((p) => (
+                <li key={p.name} className="py-3">
+                  {p.href ? (
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between"
+                    >
+                      <span className="text-[15px] font-medium text-text-primary group-hover:text-accent">
+                        {p.name}{" "}
+                        <span className="font-normal text-text-secondary">— {p.description}</span>
+                      </span>
+                      <span className="font-mono text-[12px] text-text-muted">{p.tech}</span>
+                    </a>
+                  ) : (
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                      <span className="text-[15px] text-text-primary">
+                        {p.name}{" "}
+                        <span className="text-text-secondary">— {p.description}</span>
+                      </span>
+                      <span className="font-mono text-[12px] text-text-muted">{p.tech}</span>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-
-        {projects.length > 6 && (
-          <div className="text-center mt-12">
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => setShowAll(!showAll)}
-              className="backdrop-blur-md bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 hover:from-purple-500/20 hover:to-pink-500/20 hover:border-purple-500/50 text-purple-700 dark:text-purple-100 rounded-full"
-            >
-              {showAll ? "Show Less" : `View All ${projects.length} Projects`}
-            </Button>
-          </div>
-        )}
       </div>
     </section>
   )

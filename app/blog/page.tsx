@@ -2,27 +2,15 @@ import { promises as fs } from "fs"
 import path from "path"
 import Link from "next/link"
 import matter from "gray-matter"
+import { format } from "date-fns"
 import type { Metadata } from "next"
+import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { BlogPostList } from "@/components/blog-post-list"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Blog | Rajan Chavada",
-  description: "Articles on AI, finance, trading, and software development.",
-}
-
-interface BlogPostRaw {
-  slug: string
-  title: string
-  description: string
-  date: Date
-  author: string
-  image?: string
-  category?: string
-  readTime?: string
+  title: "Writing",
+  description: "Long-form on AI, agentic systems, finance, and engineering practice.",
 }
 
 interface BlogPostSerialized {
@@ -30,10 +18,8 @@ interface BlogPostSerialized {
   title: string
   description: string
   date: string
-  author: string
-  image?: string
+  readTime: string
   category?: string
-  readTime?: string
 }
 
 async function getBlogPosts(): Promise<BlogPostSerialized[]> {
@@ -41,7 +27,7 @@ async function getBlogPosts(): Promise<BlogPostSerialized[]> {
 
   try {
     const files = await fs.readdir(contentDir)
-    const posts: BlogPostRaw[] = []
+    const posts: Array<BlogPostSerialized & { sortDate: number }> = []
 
     for (const file of files) {
       if (!file.endsWith(".mdx")) continue
@@ -50,11 +36,11 @@ async function getBlogPosts(): Promise<BlogPostSerialized[]> {
       const fileContent = await fs.readFile(filePath, "utf-8")
       const { data, content } = matter(fileContent)
 
-      // Calculate read time (average 200 words per minute)
+      if (data.draft === true) continue
+
       const wordCount = content.split(/\s+/).length
       const readTime = `${Math.ceil(wordCount / 200)} min read`
 
-      // Handle date - gray-matter may return Date object or string
       let postDate: Date
       if (data.date instanceof Date) {
         postDate = data.date
@@ -68,24 +54,17 @@ async function getBlogPosts(): Promise<BlogPostSerialized[]> {
         slug: file.replace(".mdx", ""),
         title: data.title || "Untitled",
         description: data.description || "",
-        date: postDate,
-        author: data.author || "Rajan Chavada",
-        image: data.image,
-        category: data.category || "General",
+        date: postDate.toISOString(),
         readTime,
+        category: data.category,
+        sortDate: postDate.getTime(),
       })
     }
 
-    // Sort by date (newest first)
     return posts
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
-      .map((p) => ({
-        ...p,
-        date: p.date.toISOString(),
-      }))
-  } catch (error) {
-    console.error("Error reading blog posts:", error)
-    // Return empty array if content directory doesn't exist yet
+      .sort((a, b) => b.sortDate - a.sortDate)
+      .map(({ sortDate, ...rest }) => rest)
+  } catch {
     return []
   }
 }
@@ -94,32 +73,90 @@ export default async function BlogPage() {
   const posts = await getBlogPosts()
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-bg-page">
       <Navigation />
 
-      <div className="pt-24 pb-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back to Home */}
+      <div id="main" className="py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-[13px] text-text-secondary transition-colors duration-150 hover:text-text-primary"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
+            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+            Home
           </Link>
 
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">Blog</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Thoughts on AI, finance, trading, and software development
+          <header className="mt-8 mb-12">
+            <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-text-muted">
+              Writing
             </p>
-          </div>
+            <h1 className="mt-2 font-display text-[2.25rem] leading-tight tracking-tight text-text-primary sm:text-[2.5rem]">
+              Posts
+            </h1>
+            <p className="mt-3 text-[15px] text-text-secondary">
+              On-site posts. Long-form lives on{" "}
+              <a
+                href="https://medium.com/@rajanchavada"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:text-accent-hover hover:underline"
+              >
+                Medium
+              </a>
+              .
+            </p>
+          </header>
 
-          {/* Blog posts grid */}
-          <div className="space-y-6">
-            <BlogPostList posts={posts} />
-          </div>
+          {posts.length === 0 ? (
+            <p className="text-[15px] text-text-secondary">
+              No posts yet. Check back soon — or read me on{" "}
+              <a
+                href="https://medium.com/@rajanchavada"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:text-accent-hover hover:underline"
+              >
+                Medium
+              </a>
+              .
+            </p>
+          ) : (
+            <ul className="divide-y divide-border border-y border-border">
+              {posts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group flex flex-col gap-2 py-5 sm:flex-row sm:items-start sm:justify-between sm:gap-6"
+                  >
+                    <div className="flex-1">
+                      {post.category && (
+                        <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-muted">
+                          {post.category}
+                        </p>
+                      )}
+                      <h2 className="mt-1 font-display text-[1.25rem] leading-snug text-text-primary group-hover:text-accent">
+                        {post.title}
+                      </h2>
+                      {post.description && (
+                        <p className="mt-2 line-clamp-2 text-[14.5px] leading-relaxed text-text-secondary">
+                          {post.description}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex shrink-0 flex-col items-end gap-1 text-[13px] text-text-muted sm:pt-1">
+                      <span className="font-mono">
+                        {format(new Date(post.date), "MMM d, yyyy")}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="h-3 w-3" strokeWidth={2} />
+                        {post.readTime}
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 

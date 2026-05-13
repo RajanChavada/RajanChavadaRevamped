@@ -1,53 +1,35 @@
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, FileText, Heart } from "lucide-react"
+import { Github, Linkedin, Mail, FileText, ExternalLink } from "lucide-react"
+
+const socials = [
+  { label: "GitHub", href: "https://github.com/RajanChavada", icon: Github },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/rajan-chavada/", icon: Linkedin },
+  { label: "Medium", href: "https://medium.com/@rajanchavada", icon: ExternalLink },
+  { label: "Email", href: "mailto:RajanChavada111@gmail.com", icon: Mail },
+  { label: "Resume", href: "/resume.pdf", icon: FileText },
+]
 
 export function Footer() {
   return (
-    <footer className="py-12 border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center space-y-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-foreground mb-2">Let's Connect</h3>
-            <p className="text-muted-foreground max-w-md mx-auto text-pretty">
-              I'm always interested in new opportunities and collaborations. Feel free to reach out!
-            </p>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" size="lg" asChild>
-              <a href="mailto:RajanChavada111@gmail.com">
-                <Mail className="mr-2 h-4 w-4" />
-                Email Me
+    <footer className="border-t border-border py-12">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <p className="font-display text-[15px] text-text-primary">
+          Handcrafted by Rajan Chavada.
+        </p>
+        <ul className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+          {socials.map((s) => (
+            <li key={s.label}>
+              <a
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center gap-1.5 text-[14px] text-text-secondary transition-colors duration-150 hover:text-text-primary"
+              >
+                <s.icon className="h-3.5 w-3.5" strokeWidth={2} />
+                {s.label}
               </a>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <a href="https://www.linkedin.com/in/rajan-chavada/" target="_blank" rel="noopener noreferrer">
-                <Linkedin className="mr-2 h-4 w-4" />
-                LinkedIn
-              </a>
-            </Button>
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <Button variant="ghost" size="sm" asChild>
-              <a href="https://github.com/RajanChavada" target="_blank" rel="noopener noreferrer">
-                <Github className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                <FileText className="h-5 w-5" />
-              </a>
-            </Button>
-          </div>
-
-          <div className="text-center pt-8 border-t border-border w-full">
-            <p className="text-sm text-muted-foreground flex items-center justify-center">
-              Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> by Rajan Chavada
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">© 2024 Rajan Chavada. All rights reserved.</p>
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   )
