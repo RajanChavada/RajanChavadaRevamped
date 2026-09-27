@@ -17,6 +17,7 @@ interface BlogPostProps {
 interface PostFrontmatter {
   title: string
   description: string
+  leadRepeatsDescription: boolean
   date: Date
   author: string
   image?: string
@@ -42,7 +43,8 @@ async function getPost(slug: string): Promise<Post | null> {
 
   try {
     const fileContent = await fs.readFile(filePath, "utf-8")
-    const { data, content } = matter(fileContent)
+    const { data, content: raw } = matter(fileContent)
+    const content = raw.replace(/^\s*#\s+.+\n+/, "")
 
     const wordCount = content.split(/\s+/).length
     const readTime = `${Math.ceil(wordCount / 200)} min read`
@@ -60,6 +62,7 @@ async function getPost(slug: string): Promise<Post | null> {
       frontmatter: {
         title: data.title || "Untitled",
         description: data.description || "",
+        leadRepeatsDescription: Boolean(data.description) && content.trimStart().startsWith(String(data.description).slice(0, 40)),
         date: postDate,
         author: data.author || "Rajan Chavada",
         image: data.image,
@@ -135,7 +138,7 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             <h1 className="mt-3 text-[2.6rem] leading-[1.02] sm:text-[3.2rem]">
               {frontmatter.title}
             </h1>
-            {frontmatter.description && (
+            {frontmatter.description && !frontmatter.leadRepeatsDescription && (
               <p className="mt-3 text-[16px] leading-relaxed text-text-secondary">
                 {frontmatter.description}
               </p>
