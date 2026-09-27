@@ -1,35 +1,62 @@
-import { Github, Linkedin, Mail, FileText, ExternalLink } from "lucide-react"
+import { links, socials } from "@/lib/site"
 
-const socials = [
-  { label: "GitHub", href: "https://github.com/RajanChavada", icon: Github },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/rajan-chavada/", icon: Linkedin },
-  { label: "Medium", href: "https://medium.com/@rajanchavada", icon: ExternalLink },
-  { label: "Email", href: "mailto:RajanChavada111@gmail.com", icon: Mail },
-  { label: "Resume", href: "/resume.pdf", icon: FileText },
+const changelog = [
+  { v: "v3.0", note: "rebuilt as a notebook. fewer badges, more handwriting." },
+  { v: "v2.0", note: "editorial serif phase." },
+  { v: "v1.0", note: "a portfolio template, like everyone else." },
 ]
 
 export function Footer() {
   return (
-    <footer className="border-t border-border py-12">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <p className="font-display text-[15px] text-text-primary">
-          Handcrafted by Rajan Chavada.
-        </p>
-        <ul className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-          {socials.map((s) => (
-            <li key={s.label}>
+    <footer className="mt-12 border-t-[1.5px] border-border-strong bg-bg-page/80">
+      <div className="mx-auto grid max-w-3xl gap-10 px-4 py-12 sm:grid-cols-[1.2fr_1fr] sm:px-6">
+        <div>
+          <p className="text-[2rem] leading-tight">
+            Building something? <br />
+            <a href={links.email} className="ink-link italic">
+              Say hi.
+            </a>
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[12.5px]">
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-secondary transition-colors hover:text-accent"
+                >
+                  {s.label} ↗
+                </a>
+              </li>
+            ))}
+            <li>
               <a
-                href={s.href}
-                target={s.href.startsWith("http") ? "_blank" : undefined}
-                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="inline-flex items-center gap-1.5 text-[14px] text-text-secondary transition-colors duration-150 hover:text-text-primary"
+                href={links.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-secondary transition-colors hover:text-accent"
               >
-                <s.icon className="h-3.5 w-3.5" strokeWidth={2} />
-                {s.label}
+                resume.pdf
               </a>
             </li>
-          ))}
-        </ul>
+          </ul>
+        </div>
+
+        <div>
+          <p className="mono-label">changelog</p>
+          <ul className="mt-3 space-y-1.5 font-mono text-[12px] text-text-secondary">
+            {changelog.map((c) => (
+              <li key={c.v} className="flex gap-3">
+                <span className="text-accent">{c.v}</span>
+                <span>{c.note}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="hand mt-5 text-[19px] text-text-muted">
+            made by hand in Toronto, Next.js underneath
+          </p>
+        </div>
       </div>
     </footer>
   )

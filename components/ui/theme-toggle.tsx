@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
-import { Sun, Moon } from "lucide-react"
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
@@ -12,32 +11,17 @@ export function ThemeToggle() {
     setMounted(true)
   }, [])
 
-  if (!mounted) {
-    return (
-      <button
-        type="button"
-        aria-label="Toggle theme"
-        className="flex h-8 w-8 items-center justify-center rounded-md border border-border"
-      >
-        <span className="block h-4 w-4" />
-      </button>
-    )
-  }
-
-  const isDark = resolvedTheme === "dark"
+  const isDark = mounted && resolvedTheme === "dark"
 
   return (
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-      className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-text-secondary transition-colors duration-150 hover:border-text-muted hover:text-text-primary"
+      aria-label={isDark ? "Switch to paper theme" : "Switch to blueprint theme"}
+      title={isDark ? "paper" : "blueprint"}
+      className="h-8 border-[1.5px] border-border-strong px-2 font-mono text-[11px] text-text-primary transition-colors duration-150 hover:bg-highlight hover:text-[#1b1914]"
     >
-      {isDark ? (
-        <Sun className="h-4 w-4" strokeWidth={2} />
-      ) : (
-        <Moon className="h-4 w-4" strokeWidth={2} />
-      )}
+      {mounted ? (isDark ? "paper" : "blueprint") : "·····"}
     </button>
   )
 }

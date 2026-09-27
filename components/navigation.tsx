@@ -3,73 +3,63 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { currently, links as site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-interface NavLink {
-  href: string
-  label: string
-}
-
-const links: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Writing" },
-  { href: "/resume.pdf", label: "Resume" },
+const links = [
+  { href: "/", label: "work" },
+  { href: "/about", label: "about" },
+  { href: "/blog", label: "writing" },
+  { href: site.resume, label: "resume" },
 ]
 
 export function Navigation() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg-page/85 backdrop-blur supports-[backdrop-filter]:bg-bg-page/70">
+    <header className="sticky top-0 z-40 border-b-[1.5px] border-border-strong bg-bg-page/90 backdrop-blur">
       <nav
         aria-label="Primary"
         className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-4 sm:px-6"
       >
-        <Link
-          href="/"
-          className="whitespace-nowrap font-display text-[15px] font-bold tracking-tight text-text-primary sm:text-[16px]"
-        >
-          Rajan Chavada
-        </Link>
+        <div className="flex min-w-0 items-center gap-3">
+          <Link
+            href="/"
+            aria-label="Rajan Chavada, home"
+            className="flex h-8 w-8 shrink-0 -rotate-3 items-center justify-center border-[1.5px] border-border-strong bg-highlight font-display text-[18px] leading-none text-[#1b1914] shadow-[2px_2px_0_0_var(--border-strong)] transition-transform hover:rotate-3"
+          >
+            rc.
+          </Link>
+          <p className="hidden truncate font-mono text-[11px] text-text-muted md:block">
+            <span className="text-accent">●</span> currently: {currently}
+            <span className="caret" aria-hidden />
+          </p>
+        </div>
 
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center gap-1 sm:gap-3">
           <ul className="flex items-center">
             {links.map((link) => {
-              const isExternal = link.href.endsWith(".pdf")
+              const isFile = link.href.endsWith(".pdf")
               const isActive =
-                !isExternal &&
-                (link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href))
-
+                !isFile &&
+                (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href))
               const className = cn(
-                "px-1.5 py-1.5 text-[13px] font-medium transition-colors duration-150 sm:px-3 sm:text-[14px]",
+                "px-2 py-1 font-mono text-[12.5px] transition-colors duration-150 sm:px-2.5",
                 isActive
-                  ? "text-accent"
+                  ? "text-text-primary underline decoration-accent decoration-2 underline-offset-[6px]"
                   : "text-text-secondary hover:text-text-primary",
               )
-
-              if (isExternal) {
-                return (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={className}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                )
-              }
-
               return (
                 <li key={link.href}>
-                  <Link href={link.href} className={className}>
-                    {link.label}
-                  </Link>
+                  {isFile ? (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link href={link.href} className={className} aria-current={isActive ? "page" : undefined}>
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               )
             })}

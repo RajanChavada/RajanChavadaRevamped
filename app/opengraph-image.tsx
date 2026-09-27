@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 
 export const runtime = "edge"
-export const alt = "Rajan Chavada — ML Software Engineer"
+export const alt = "Rajan Chavada: I build tools engineers actually keep using"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -16,88 +16,32 @@ export default async function OpengraphImage() {
           width: "100%",
           height: "100%",
           padding: "72px 80px",
-          backgroundColor: "#FAFAF7",
+          backgroundColor: "#F5F1E6",
+          backgroundImage:
+            "linear-gradient(rgba(27,25,20,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(27,25,20,0.07) 1px, transparent 1px)",
+          backgroundSize: "30px 30px",
           fontFamily: "Georgia, serif",
+          color: "#1B1914",
         }}
       >
-        <div
-          style={{
-            fontSize: 24,
-            color: "#5C5C5C",
-            letterSpacing: 1.5,
-            textTransform: "uppercase",
-          }}
-        >
+        <div style={{ display: "flex", fontSize: 22, letterSpacing: 3, textTransform: "uppercase", color: "#8A8377", fontFamily: "monospace" }}>
           chavada.vercel.app
         </div>
-
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <div
-            style={{
-              fontSize: 96,
-              fontWeight: 700,
-              color: "#1A1A1A",
-              letterSpacing: -2,
-              lineHeight: 1.05,
-            }}
-          >
-            Rajan Chavada
-          </div>
-          <div
-            style={{
-              fontSize: 36,
-              color: "#5C5C5C",
-              fontFamily: "sans-serif",
-            }}
-          >
-            ML Software Engineer · Agentic AI · Production Systems
+          <div style={{ fontSize: 110, lineHeight: 1 }}>Rajan Chavada</div>
+          <div style={{ display: "flex", fontSize: 40, fontFamily: "sans-serif" }}>
+            I build tools engineers&nbsp;
+            <span style={{ background: "#FFD666", padding: "0 6px" }}>actually keep using.</span>
           </div>
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 12,
-            fontFamily: "sans-serif",
-          }}
-        >
-          <div
-            style={{
-              padding: "10px 20px",
-              borderRadius: 999,
-              border: "1px solid #E5E2D8",
-              backgroundColor: "#FFFFFF",
-              fontSize: 22,
-              color: "#1A1A1A",
-            }}
-          >
-            Patent-pending agentic RAG · 18,000+ RBC traders
-          </div>
-          <div
-            style={{
-              padding: "10px 20px",
-              borderRadius: 999,
-              border: "1px solid #E5E2D8",
-              backgroundColor: "#FFFFFF",
-              fontSize: 22,
-              color: "#1A1A1A",
-            }}
-          >
-            Rosetta · 2,000+ downloads
-          </div>
-          <div
-            style={{
-              padding: "10px 20px",
-              borderRadius: 999,
-              border: "1px solid #E5E2D8",
-              backgroundColor: "#FFFFFF",
-              fontSize: 22,
-              color: "#1A1A1A",
-            }}
-          >
-            Neurovn · live on PyPI
-          </div>
+        <div style={{ display: "flex", gap: 20, fontSize: 22, fontFamily: "monospace", color: "#E8501A" }}>
+          <span>NEUROVN</span>
+          <span>·</span>
+          <span>CACHELANE</span>
+          <span>·</span>
+          <span>ROSETTA</span>
+          <span>·</span>
+          <span>BREE (YC)</span>
         </div>
       </div>
     ),
