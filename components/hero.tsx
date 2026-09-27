@@ -1,80 +1,67 @@
-import Link from "next/link"
-import { FileText, Github, Linkedin, ExternalLink as ExternalIcon, Sparkles, Package, Activity } from "lucide-react"
-import { ProofPill } from "@/components/ui/proof-pill"
+import { PencilTrail } from "@/components/pencil-trail"
+import { links, socials } from "@/lib/site"
 
 export function Hero() {
   return (
-    <section id="hero" className="pt-28 pb-20 sm:pt-32 sm:pb-24">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <div className="animate-subtle-rise">
-          <h1 className="font-display text-[2.75rem] leading-[1.05] tracking-tight text-text-primary sm:text-5xl md:text-[3.75rem]">
-            Rajan Chavada
-          </h1>
-          <p className="mt-4 text-base text-text-secondary sm:text-lg">
-            ML Software Engineer · Agentic AI · Production Systems
-          </p>
-        </div>
-
-        <ul className="mt-8 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-          <li>
-            <ProofPill icon={Sparkles}>
-              Patent-pending agentic RAG — 18,000+ RBC traders
-            </ProofPill>
-          </li>
-          <li>
-            <ProofPill icon={Package}>
-              Rosetta · 2,000+ downloads · adopted at RBC Borealis AI
-            </ProofPill>
-          </li>
-          <li>
-            <ProofPill icon={Activity}>
-              Neurovn · open-source agentic tracing SDK on PyPI
-            </ProofPill>
-          </li>
-        </ul>
-
-        <p className="mt-8 text-[15px] text-text-secondary">
-          BSc Computer Science @ Western · class of 2027 · Toronto, ON
+    <section id="hero" className="relative overflow-hidden pt-20 pb-20 sm:pt-28 sm:pb-24">
+      <PencilTrail />
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
+        <p className="mono-label animate-subtle-rise">
+          notebook no. 3 · toronto, on · utc−5
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-3">
+        <h1 className="animate-subtle-rise mt-5 text-[3.6rem] leading-[0.95] sm:text-[5.5rem]">
+          Rajan <span className="italic">Chavada</span>
+        </h1>
+
+        <p className="mt-8 max-w-xl text-[1.3rem] leading-snug text-text-primary sm:text-[1.45rem]">
+          I build tools that engineers{" "}
+          <span className="marker">actually keep using</span>.
+        </p>
+
+        <p className="mt-5 max-w-xl text-[16.5px] leading-relaxed text-text-secondary">
+          Right now I&apos;m on the backend at <span className="text-text-primary">Bree (YC)</span>. Before
+          that I was moving models onto GPUs at <span className="text-text-primary">RBC Borealis AI</span>,
+          and before that I built a research agent at RBC that ended up patent-pending. Nights and weekends
+          go to Neurovn, CacheLane and Rosetta. I study CS at Western, class of &apos;27.
+        </p>
+
+        <div className="mt-9 flex flex-wrap items-center gap-3">
           <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors duration-150 hover:bg-accent-hover"
+            href="#built"
+            className="sheet inline-flex items-center gap-2 bg-text-primary px-4 py-2 font-mono text-[13px] text-bg-page transition-transform hover:-translate-y-0.5"
+            style={{ background: "var(--text-primary)", color: "var(--bg-page)" }}
           >
-            <FileText className="h-4 w-4" strokeWidth={2} />
-            Resume
+            see what I&apos;ve built ↓
           </a>
           <a
-            href="https://github.com/RajanChavada"
+            href={links.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-transparent px-4 py-2 text-sm font-medium text-text-primary transition-colors duration-150 hover:bg-bg-subtle"
+            className="sheet inline-flex items-center gap-2 px-4 py-2 font-mono text-[13px] text-text-primary transition-transform hover:-translate-y-0.5"
           >
-            <Github className="h-4 w-4" strokeWidth={2} />
-            GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/rajan-chavada/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-transparent px-4 py-2 text-sm font-medium text-text-primary transition-colors duration-150 hover:bg-bg-subtle"
-          >
-            <Linkedin className="h-4 w-4" strokeWidth={2} />
-            LinkedIn
-          </a>
-          <a
-            href="https://medium.com/@rajanchavada"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-transparent px-4 py-2 text-sm font-medium text-text-primary transition-colors duration-150 hover:bg-bg-subtle"
-          >
-            <ExternalIcon className="h-4 w-4" strokeWidth={2} />
-            Medium
+            resume.pdf
           </a>
         </div>
+
+        <ul className="mt-8 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[12.5px]">
+          {socials.map((s) => (
+            <li key={s.label}>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-secondary underline decoration-border decoration-1 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+              >
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <p className="hand pointer-events-none absolute -bottom-10 right-6 hidden rotate-[-4deg] text-[21px] text-accent sm:block">
+          ← try scribbling on the grid
+        </p>
       </div>
     </section>
   )

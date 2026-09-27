@@ -1,244 +1,139 @@
 import type { Metadata } from "next"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { SectionHeading } from "@/components/ui/section-heading"
-import { Award, BookOpen, GraduationCap, MapPin } from "lucide-react"
+import { SectionTitle } from "@/components/section-title"
+import { links } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Rajan Chavada — ML Software Engineer building production agentic AI systems. Currently at Borealis AI. Toronto / UTC-5.",
+    "Rajan Chavada: CS at Western, backend at Bree (YC), previously ML infra at RBC Borealis AI. Builds developer tools on the side.",
 }
 
-interface RecognitionItem {
-  title: string
-  description: string
-  year?: string
-}
-
-const recognition: RecognitionItem[] = [
-  {
-    title: "Patent-pending",
-    description:
-      "Agentic orchestration for regulated financial systems (RBC Capital Markets)",
-    year: "2025",
-  },
-  {
-    title: "U of T Hacks — Winner",
-    description: "Badge: vectorized professional identity for career fairs",
-    year: "2026",
-  },
-  {
-    title: "Apple Swift Student Challenge",
-    description: "PhysioPoint: ARKit physiotherapy assessment",
-    year: "2026",
-  },
-  {
-    title: "RBC Borealis AI",
-    description: "Rosetta adopted internally; pitched to a 140-engineer lab",
-  },
-  {
-    title: "Western AI — Executive",
-    description: "Led CNN-based ASL translator team",
-  },
-  {
-    title: "Western Design Thinking — Executive",
-    description: "Pitched GPS car-theft solution to the Dean of Engineering",
-  },
+const recognition = [
+  { year: "2025", title: "Patent pending", what: "agentic orchestration over regulated financial data, from my RBC Amplify internship" },
+  { year: "2026", title: "UofT Hacks, winner", what: "Badge: vectorized professional identity for career fairs" },
+  { year: "2026", title: "Apple Swift Student Challenge", what: "PhysioPoint: ARKit physiotherapy assessment" },
+  { year: "2026", title: "Rosetta at Borealis AI", what: "pitched to the lab, picked up by engineers on the team" },
+  { year: "", title: "Western AI, executive", what: "led the CNN-based ASL translator team" },
+  { year: "", title: "Western Design Thinking, executive", what: "pitched a GPS car-theft idea to the Dean of Engineering" },
 ]
 
 const reading = [
-  {
-    title: "The Bitter Lesson",
-    author: "Rich Sutton",
-    href: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html",
-  },
-  {
-    title: "Reflexion: Language Agents with Verbal Reinforcement Learning",
-    author: "Shinn et al.",
-    href: "https://arxiv.org/abs/2303.11366",
-  },
-  {
-    title: "Designing Data-Intensive Applications",
-    author: "Martin Kleppmann",
-  },
+  { title: "The Bitter Lesson", author: "Rich Sutton", href: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html" },
+  { title: "Reflexion: Language Agents with Verbal Reinforcement Learning", author: "Shinn et al.", href: "https://arxiv.org/abs/2303.11366" },
+  { title: "Designing Data-Intensive Applications", author: "Martin Kleppmann" },
 ]
 
 const learning = [
-  "Distributed training internals (PyTorch FSDP, DeepSpeed)",
-  "Tarjan's SCC and graph algorithms for agent workflow optimization",
+  "distributed training internals (PyTorch FSDP, DeepSpeed)",
+  "graph algorithms for agent workflows (Tarjan's SCC and friends)",
   "Triton kernels and CUDA fundamentals",
+]
+
+const facts = [
+  { k: "based", v: "Toronto, ON · UTC−5 · open to US/Canada" },
+  { k: "school", v: "B.Sc. Computer Science, Western University · May 2027 · 3.7 GPA" },
+  { k: "now", v: "Software Engineer Intern at Bree (YC)" },
+  { k: "off the clock", v: "markets (I used to day trade, badly, then less badly), hackathons, writing" },
 ]
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-bg-page">
+    <main className="min-h-screen">
       <Navigation />
 
       <article id="main" className="py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <header className="mb-12">
-            <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-text-muted">
-              About
-            </p>
-            <h1 className="mt-2 font-display text-[2.25rem] leading-tight tracking-tight text-text-primary sm:text-[2.5rem]">
-              Rajan Chavada
-            </h1>
-            <p className="mt-3 text-[15px] text-text-secondary">
-              ML Software Engineer · Agentic AI · Production Systems
-            </p>
-          </header>
+          <p className="mono-label">page 2 · about</p>
+          <h1 className="mt-4 text-[3.2rem] leading-[0.95] sm:text-[4.2rem]">
+            Hi, I&apos;m <span className="italic">Rajan</span>.
+          </h1>
 
-          <section className="prose-editorial">
+          <div className="prose-editorial mt-8 text-[17.5px]">
             <p>
-              I&apos;m an ML software engineer who likes the part of the work where you
-              ship something other engineers actually use. Right now I&apos;m at{" "}
-              <a
-                href="https://www.borealisai.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Borealis AI
-              </a>{" "}
-              working on model-serving infrastructure. Before that, I helped build a
-              patent-pending agentic system that&apos;s now shipping to 18,000+ traders
-              at RBC. On the side I maintain{" "}
-              <a
-                href="https://www.npmjs.com/package/rosettablueprint"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Rosetta
-              </a>{" "}
-              (2,000+ downloads) and{" "}
-              <a
-                href="https://neurovn-alpha.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Neurovn
-              </a>{" "}
-              — open-source tooling for agentic coding and workflow tracing.
+              I like the part of engineering where something leaves my laptop and other people start depending
+              on it. Most of what I&apos;ve built came from being annoyed at something at work: nobody knew what
+              our agents cost, so I built <a href="https://neurovn-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">Neurovn</a>.
+              Our agent configs didn&apos;t work across IDEs, so I built{" "}
+              <a href="https://www.npmjs.com/package/rosettablueprint" target="_blank" rel="noopener noreferrer">Rosetta</a>.
+              Claude Code kept eating our API budget, so Aditya and I built{" "}
+              <a href="https://www.npmjs.com/package/cachelane" target="_blank" rel="noopener noreferrer">CacheLane</a>.
             </p>
-          </section>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            <div className="rounded-lg border border-border bg-bg-elevated p-5">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-accent" strokeWidth={2} />
-                <h2 className="font-display text-[16px] text-text-primary">Based</h2>
-              </div>
-              <p className="mt-2 text-[14.5px] text-text-secondary">
-                Toronto, ON · UTC-5
-              </p>
-            </div>
-            <div className="rounded-lg border border-border bg-bg-elevated p-5">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="h-4 w-4 text-accent" strokeWidth={2} />
-                <h2 className="font-display text-[16px] text-text-primary">School</h2>
-              </div>
-              <p className="mt-2 text-[14.5px] text-text-secondary">
-                BSc Computer Science · University of Western Ontario · Class of 2027
-              </p>
-            </div>
+            <p>
+              At work I&apos;ve bounced between the model side and the infrastructure side: shrinking and serving
+              models on GPUs at RBC Borealis AI, writing Terraform at Intact, building a research agent at RBC
+              that became a patent application, and now keeping deploys boring at Bree.
+            </p>
           </div>
 
-          <div className="mt-16">
-            <SectionHeading
-              eyebrow="Recognition"
-              title="Talks & awards"
-              className="mb-6"
-            />
-            <ul className="divide-y divide-border border-y border-border">
-              {recognition.map((item) => (
-                <li
-                  key={item.title}
-                  className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
-                >
-                  <div className="flex items-start gap-3">
-                    <Award
-                      className="mt-1 h-4 w-4 shrink-0 text-accent"
-                      strokeWidth={2}
-                    />
-                    <div>
-                      <h3 className="font-display text-[15.5px] leading-snug text-text-primary">
-                        {item.title}
-                      </h3>
-                      <p className="mt-0.5 text-[14px] text-text-secondary">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                  {item.year && (
-                    <span className="ml-7 font-mono text-[12px] text-text-muted sm:ml-0">
-                      {item.year}
-                    </span>
-                  )}
+          <dl className="sheet mt-10 grid gap-x-6 gap-y-3 p-5 font-mono text-[13px] sm:grid-cols-[120px_1fr]">
+            <span className="tape" aria-hidden />
+            {facts.map((f) => (
+              <div key={f.k} className="contents">
+                <dt className="text-accent">{f.k}</dt>
+                <dd className="text-text-primary">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-20">
+            <SectionTitle index="A" title="Recognition" note="the fridge-magnet section" />
+            <ul className="divide-y divide-dashed divide-border border-y-[1.5px] border-border-strong">
+              {recognition.map((r) => (
+                <li key={r.title} className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-5">
+                  <span className="shrink-0 font-mono text-[12px] text-text-muted sm:w-12">{r.year || "·"}</span>
+                  <span className="flex-1">
+                    <span className="block font-display text-[1.35rem] leading-snug">{r.title}</span>
+                    <span className="text-[14.5px] text-text-secondary">{r.what}</span>
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="mt-16">
-            <SectionHeading
-              eyebrow="Currently reading"
-              title="On my desk"
-              className="mb-6"
-            />
-            <ul className="space-y-3">
-              {reading.map((r) => (
-                <li
-                  key={r.title}
-                  className="flex items-start gap-3 text-[15px] text-text-primary"
-                >
-                  <BookOpen className="mt-1 h-4 w-4 shrink-0 text-accent" strokeWidth={2} />
-                  <div>
+          <div className="mt-20 grid gap-12 sm:grid-cols-2">
+            <div>
+              <p className="mono-label">on my desk</p>
+              <ul className="mt-4 space-y-3 text-[15px]">
+                {reading.map((r) => (
+                  <li key={r.title}>
                     {r.href ? (
-                      <a
-                        href={r.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-accent hover:text-accent-hover hover:underline"
-                      >
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" className="ink-link">
                         {r.title}
                       </a>
                     ) : (
-                      <span>{r.title}</span>
+                      <span className="text-text-primary">{r.title}</span>
                     )}
-                    <span className="text-text-secondary"> — {r.author}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    <span className="block font-mono text-[12px] text-text-muted">{r.author}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="mono-label">on the bench</p>
+              <ul className="mt-4 space-y-2 text-[15px] text-text-primary">
+                {learning.map((l) => (
+                  <li key={l} className="flex gap-2">
+                    <span className="text-accent">□</span>
+                    <span>{l}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="hand mt-4 text-[19px] text-text-muted">checkboxes stay empty until I ship something with it</p>
+            </div>
           </div>
 
-          <div className="mt-16">
-            <SectionHeading
-              eyebrow="Currently learning"
-              title="What's on the bench"
-              className="mb-6"
-            />
-            <ul className="space-y-2">
-              {learning.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-[15px] text-text-primary"
-                >
-                  <span className="mt-2.5 block h-1 w-1 shrink-0 rounded-full bg-accent" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-16 rounded-lg border border-border bg-bg-subtle p-5">
-            <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-text-muted">
-              Colophon
-            </p>
-            <p className="mt-2 text-[14px] leading-relaxed text-text-secondary">
-              Built with Next.js. Typeset in Libre Baskerville, Source Sans 3, and
-              JetBrains Mono. Icons by Lucide. Hosted on Vercel. Single-accent
-              monochrome — no gradients, no glass.
+          <div className="mt-20 border-[1.5px] border-dashed border-border p-5">
+            <p className="mono-label">colophon</p>
+            <p className="mt-2 text-[14.5px] leading-relaxed text-text-secondary">
+              Next.js on Vercel. Set in Instrument Serif, Inter Tight, JetBrains Mono and Caveat for the
+              handwriting. Graph paper by day, blueprint by night. Demo clips are real screen recordings.
+              Find the source on{" "}
+              <a href={links.github} target="_blank" rel="noopener noreferrer" className="ink-link">
+                GitHub
+              </a>
+              .
             </p>
           </div>
         </div>

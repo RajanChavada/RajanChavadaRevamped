@@ -6,7 +6,6 @@ import matter from "gray-matter"
 import { format } from "date-fns"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowLeft, Calendar, Clock } from "lucide-react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import type { MDXComponents } from "mdx/types"
@@ -99,17 +98,16 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
 
   if (!post) {
     return (
-      <main className="min-h-screen bg-bg-page">
+      <main className="min-h-screen">
         <Navigation />
         <div className="flex min-h-[60vh] items-center justify-center px-4">
           <div className="text-center">
             <h1 className="font-display text-3xl text-text-primary">Post not found</h1>
             <Link
               href="/blog"
-              className="mt-4 inline-flex items-center gap-1.5 text-[14px] text-accent hover:text-accent-hover hover:underline"
+              className="ink-link mt-4 inline-block font-mono text-[13px]"
             >
-              <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
-              Back to writing
+              ← back to writing
             </Link>
           </div>
         </div>
@@ -121,25 +119,20 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
   const { frontmatter, content } = post
 
   return (
-    <main className="min-h-screen bg-bg-page">
+    <main className="min-h-screen">
       <Navigation />
       <article id="main" className="py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-[13px] text-text-secondary transition-colors duration-150 hover:text-text-primary"
+            className="font-mono text-[12.5px] text-text-secondary transition-colors duration-150 hover:text-accent"
           >
-            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
-            Writing
+            ← writing
           </Link>
 
-          <header className="mt-8 mb-10 border-b border-border pb-8">
-            {frontmatter.category && (
-              <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-text-muted">
-                {frontmatter.category}
-              </p>
-            )}
-            <h1 className="mt-2 font-display text-[2.25rem] leading-tight tracking-tight text-text-primary sm:text-[2.5rem]">
+          <header className="mt-8 mb-10 border-b-[1.5px] border-border-strong pb-8">
+            {frontmatter.category && <p className="mono-label">{frontmatter.category}</p>}
+            <h1 className="mt-3 text-[2.6rem] leading-[1.02] sm:text-[3.2rem]">
               {frontmatter.title}
             </h1>
             {frontmatter.description && (
@@ -147,16 +140,9 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
                 {frontmatter.description}
               </p>
             )}
-            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-text-muted">
-              <span className="inline-flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5" strokeWidth={2} />
-                {format(frontmatter.date, "MMMM d, yyyy")}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5" strokeWidth={2} />
-                {frontmatter.readTime}
-              </span>
-            </div>
+            <p className="mt-5 font-mono text-[12px] text-text-muted">
+              {format(frontmatter.date, "MMMM d, yyyy")} · {frontmatter.readTime}
+            </p>
           </header>
 
           <div className="prose-editorial">
@@ -167,14 +153,14 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             />
           </div>
 
-          <footer className="mt-16 border-t border-border pt-8 text-[14.5px] text-text-secondary">
+          <footer className="mt-16 border-t border-dashed border-border pt-8 text-[14.5px] text-text-secondary">
             <p>
               Questions or feedback? Reach out on{" "}
               <a
                 href="https://www.linkedin.com/in/rajan-chavada/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:text-accent-hover hover:underline"
+                className="ink-link"
               >
                 LinkedIn
               </a>{" "}
@@ -183,18 +169,14 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
                 href="https://github.com/RajanChavada"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent hover:text-accent-hover hover:underline"
+                className="ink-link"
               >
                 GitHub
               </a>
               .
             </p>
-            <Link
-              href="/blog"
-              className="mt-6 inline-flex items-center gap-1.5 text-accent hover:text-accent-hover hover:underline"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
-              All posts
+            <Link href="/blog" className="ink-link mt-6 inline-block font-mono text-[13px]">
+              ← all posts
             </Link>
           </footer>
         </div>
